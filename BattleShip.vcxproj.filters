@@ -19,6 +19,12 @@
     <ClCompile Include="game_manager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
+    <ClCompile Include="menu_scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="setting_scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
@@ -29,6 +35,18 @@
     </ClInclude>
     <ClInclude Include="button.h" />
     <ClInclude Include="scene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_scene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="resources_manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="setting_scene.h">
       <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>

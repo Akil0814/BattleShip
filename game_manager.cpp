@@ -9,7 +9,7 @@ GameManager::GameManager()
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
 
-	window = SDL_CreateWindow("test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Battle Ship!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
 	init_assert(window, u8"SDL_CreateWindow Error");
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);//硬件加速 垂直同步 目标纹理
@@ -32,18 +32,20 @@ int GameManager::run(int argc, char** argv)
 
 	Uint64 last_counter = SDL_GetPerformanceCounter();
 	const Uint64 counter_freq = SDL_GetPerformanceFrequency();//获取高性能计数器的频率
+	SceneManager::instance()->init_scene_pool();
+	SceneManager::instance()->switch_to(SceneManager::SceneType::Menu);
 
 	while (!is_quit)
 	{
 		while (SDL_PollEvent(&event))
-			on_input();
+			on_input(event);
 
 		Uint64 current_counter = SDL_GetPerformanceCounter();//实现动态延时
 		double delta = (double)(current_counter - last_counter) / counter_freq;
 		last_counter = current_counter;
 
-		if (delta * 1000 < 1000.0 / 60)
-			SDL_Delay((Uint32)(1000.0 / 60 - delta * 1000));
+		if (delta * 1000 < 1000.0 / FPS)
+			SDL_Delay((Uint32)(1000.0 / FPS - delta * 1000));
 
 		on_update(delta);
 
@@ -59,18 +61,27 @@ int GameManager::run(int argc, char** argv)
 
 }
 
-void GameManager::on_input()
+void GameManager::on_input(const SDL_Event& event)
 {
-
+	SceneManager::instance()->on_input(event);
 }
 
 void GameManager::on_update(double delta)
 {
-
+	SceneManager::instance()->on_update(delta);
 }
 
 void GameManager::on_render()
 {
-
+	SceneManager::instance()->on_render();
 }
 
+SDL_Window* GameManager::get_window()const
+{
+	return window;
+}
+
+SDL_Renderer* GameManager::get_renderer()const
+{
+	return renderer;
+}

@@ -1,0 +1,31 @@
+#include"setting_scene.h"
+
+SettingScene::SettingScene()
+{
+}
+
+SettingScene::~SettingScene()
+{
+}
+
+void SettingScene::on_enter()
+{
+
+}
+void SettingScene::on_exit()
+{
+
+}
+
+void SettingScene::on_update(double delta)
+{
+
+}
+void SettingScene::on_render()
+{
+
+}
+void SettingScene::on_input(const SDL_Event& event)
+{
+
+}

@@ -1,4 +1,6 @@
 #pragma once
+#include<SDL.h>
+
 class Scene
 {
 public:
@@ -6,11 +8,14 @@ public:
 	virtual ~Scene() = default;
 
 	virtual void on_enter() = 0;
-	virtual void on_update() = 0;
-	virtual void on_draw() = 0;
-	virtual void on_input(const ExMessage& msg) = 0;
 	virtual void on_exit() = 0;
 
+	virtual void on_update(double delta) = 0;
+	virtual void on_render() = 0;
+	virtual void on_input(const SDL_Event&event ) = 0;
+
 protected:
+	int WINDOW_WIDTH = 10;
+	int WINDOW_HEIGHT = 10;
 
 };
