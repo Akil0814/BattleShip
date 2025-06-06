@@ -141,6 +141,8 @@ copy /Y "%DLL_SRC_DIR%\SDL2_ttf\lib\x64\SDL2_ttf.dll" "$(OutDir)"
     <ClCompile Include="game_manager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_scene.cpp" />
+    <ClCompile Include="resources_manager.cpp" />
+    <ClCompile Include="scene_manager.cpp" />
     <ClCompile Include="setting_scene.cpp" />
   </ItemGroup>
   <ItemGroup>

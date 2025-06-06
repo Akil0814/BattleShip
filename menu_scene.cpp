@@ -1,4 +1,5 @@
 #include"menu_scene.h"
+#include"game_manager.h"
 
 
 MenuScene::MenuScene()

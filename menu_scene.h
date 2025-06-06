@@ -1,7 +1,5 @@
 #pragma once
 #include"scene.h"
-//#include"scene_manager.h"
-#include"game_manager.h"
 #include"button.h"
 
 class MenuScene:public Scene
@@ -23,8 +21,5 @@ public:
 
 
 	//Button NewType;
-
-
-
 };
 

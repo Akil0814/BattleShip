@@ -25,6 +25,12 @@
     <ClCompile Include="setting_scene.cpp">
       <Filter>scene</Filter>
     </ClCompile>
+    <ClCompile Include="resources_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="scene_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
