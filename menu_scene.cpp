@@ -1,8 +1,5 @@
 #include"menu_scene.h"
 
-#include"game_manager.h"
-
-
 MenuScene::MenuScene()
 	:classic(GameManager::instance()->get_renderer(), { 100,50,250,100 }, { 100,50,250,100 }, nullptr, nullptr, nullptr)
 {
@@ -25,7 +22,7 @@ void MenuScene::on_enter()
 }
 void MenuScene::on_exit()
 {
-
+	std::cout << "exit" << std::endl;////////////////////////////////
 }
 
 void MenuScene::on_update(double delta)

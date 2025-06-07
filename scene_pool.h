@@ -1,9 +1,7 @@
 #pragma once
-
-class Scene;
-
-//ScenePool* ScenePool::scene_pool = nullptr;
-
+#include"scene.h"
+#include"scene_type.h"
+#include "menu_scene.h"
 class ScenePool
 {
 public:
@@ -16,13 +14,29 @@ public:
 		return scene_pool;
 	}
 
-	Scene* get_scene();
+	Scene* get_scene(SceneType type);
+	
+	void delete_scene(SceneType type);
 
 private:
 	ScenePool()=default;
 	~ScenePool() = default;;
 
+	bool cheek_invalid(Scene* scene);
+
 private:
 	static ScenePool* scene_pool;
+
 	Scene* menu_scene;
+	Scene* setting_scene;
+
+	Scene* classic_PVE_scene;
+	Scene* classic_PVP_scene;
+	Scene* classic_setup_scene;
+
+	Scene* new_type_PVE_scene;
+	Scene* new_type_PVP_scene;
+	Scene* new_type_setup_scene;
+
+
 };

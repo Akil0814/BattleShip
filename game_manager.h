@@ -1,9 +1,10 @@
 #pragma once
-
 #include"manager.h"
-#include"scene_manager.h"
-
 #include<iostream>
+
+#include "scene_manager.h"
+#include"scene_pool.h"
+#include"scene_type.h" 
 
 #include<SDL.h>
 #include <SDL_ttf.h>//×ÖÌå¿â
@@ -11,7 +12,9 @@
 #include <SDL_image.h>//Í¼Ïñ¿â
 #include <SDL2_gfxPrimitives.h>
 
-class GameManager:public Manager<GameManager>
+class Scene;
+
+class GameManager :public Manager<GameManager>
 {
 	friend class Manager<GameManager>;
 
@@ -21,6 +24,8 @@ public:
 	SDL_Window* get_window()const;
 
 	SDL_Renderer* get_renderer()const;
+
+	void switch_scene(SceneType type);
 
 protected:
 	GameManager();
@@ -59,5 +64,4 @@ private:
 	Scene* setting_scene = nullptr;
 
 };
-
 

@@ -1,10 +1,7 @@
 #pragma once
-#ifndef _SCENE_MANAGER_H_
-
-#include"manager.h"
+#include<SDL.h>
 #include"scene.h"
-
-class Scene;
+#include"manager.h"
 
 class SceneManager :public Manager<SceneManager>
 {
@@ -28,4 +25,3 @@ private:
 
 };
 
-#endif // !_SCENE_MANAGER_H_

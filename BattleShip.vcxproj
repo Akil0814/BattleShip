@@ -138,11 +138,13 @@ copy /Y "%DLL_SRC_DIR%\SDL2_ttf\lib\x64\SDL2_ttf.dll" "$(OutDir)"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="game_manager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_scene.cpp" />
     <ClCompile Include="resources_manager.cpp" />
     <ClCompile Include="scene_manager.cpp" />
+    <ClCompile Include="scene_pool.cpp" />
     <ClCompile Include="setting_scene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +155,7 @@ copy /Y "%DLL_SRC_DIR%\SDL2_ttf\lib\x64\SDL2_ttf.dll" "$(OutDir)"
     <ClInclude Include="resources_manager.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene_manager.h" />
+    <ClInclude Include="scene_pool.h" />
     <ClInclude Include="scene_type.h" />
     <ClInclude Include="setting_scene.h" />
   </ItemGroup>

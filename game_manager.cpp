@@ -30,11 +30,10 @@ GameManager::~GameManager()
 
 int GameManager::run(int argc, char** argv)
 {
-
 	Uint64 last_counter = SDL_GetPerformanceCounter();
 	const Uint64 counter_freq = SDL_GetPerformanceFrequency();//获取高性能计数器的频率
 
-	SceneManager::instance()->set_current_scene(menu_scene);
+	SceneManager::instance()->set_current_scene(ScenePool::instance()->get_scene(SceneType::Menu));
 
 	while (!is_quit)
 	{
@@ -85,4 +84,9 @@ SDL_Window* GameManager::get_window()const
 SDL_Renderer* GameManager::get_renderer()const
 {
 	return renderer;
+}
+
+void switch_scene(SceneType type)
+{
+	SceneManager::instance()->switch_to(ScenePool::instance()->get_scene(type));
 }

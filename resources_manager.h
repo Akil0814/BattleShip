@@ -44,4 +44,3 @@ private:
 	MusicPool music_pool;
 	TexturePool texture_pool;
 };
-

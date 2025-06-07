@@ -13,3 +13,5 @@ enum class SceneType
 	NewTypePVP,
 	NewTypeSetup
 };
+
+

@@ -1,8 +1,12 @@
 #pragma once
+#ifndef _MENU_SCENE_H_
+#define _MENU_SCENE_H_
+
 #include"scene.h"
 #include"button.h"
+#include"game_manager.h"
 
-class MenuScene:public Scene
+class MenuScene :public Scene
 {
 private:
 	Button classic;
@@ -18,4 +22,8 @@ public:
 	void on_render();
 	void on_input(const SDL_Event& event);
 };
+
+#endif // !_MENU_CENE_H_
+
+
 

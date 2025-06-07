@@ -1,8 +1,9 @@
 #include "scene_manager.h"
-
+#include<iostream>
 
 void SceneManager::set_current_scene(Scene* scene)
 {
+	std::cout << "set scene" << std::endl;/////////////////////////////////////
 	current_scene = scene;
 	current_scene->on_enter();
 }
