@@ -55,5 +55,8 @@
     <ClInclude Include="setting_scene.h">
       <Filter>scene</Filter>
     </ClInclude>
+    <ClInclude Include="scene_type.h">
+      <Filter>scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

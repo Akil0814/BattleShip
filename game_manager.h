@@ -54,6 +54,10 @@ private:
 
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+
+	Scene* menu_scene = nullptr;
+	Scene* setting_scene = nullptr;
+
 };
 
 

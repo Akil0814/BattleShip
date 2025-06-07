@@ -14,6 +14,7 @@ GameManager::GameManager()
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);//硬件加速 垂直同步 目标纹理
 	init_assert(renderer, u8"SDL_CreateRenderer Error");
+
 }
 
 GameManager::~GameManager()
@@ -32,8 +33,8 @@ int GameManager::run(int argc, char** argv)
 
 	Uint64 last_counter = SDL_GetPerformanceCounter();
 	const Uint64 counter_freq = SDL_GetPerformanceFrequency();//获取高性能计数器的频率
-	SceneManager::instance()->init_scene_pool();
-	SceneManager::instance()->switch_to(SceneManager::SceneType::Menu);
+
+	SceneManager::instance()->set_current_scene(menu_scene);
 
 	while (!is_quit)
 	{
