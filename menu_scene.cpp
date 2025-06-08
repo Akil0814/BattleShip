@@ -6,11 +6,13 @@ MenuScene::MenuScene()
 	classic.set_on_click([]
 		{
 			std::cout << "classic" << std::endl;
+			GameManager::instance()->switch_scene(SceneType::ClassicSetup);
 		});
 }
 
 MenuScene::~MenuScene()
 {
+
 }
 
 void MenuScene::on_enter()

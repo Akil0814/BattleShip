@@ -35,6 +35,9 @@
     <ClCompile Include="scene_pool.cpp">
       <Filter>scene</Filter>
     </ClCompile>
+    <ClCompile Include="classic_setup_scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
@@ -63,6 +66,9 @@
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="scene_pool.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="classic_setup_scene.h">
       <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>

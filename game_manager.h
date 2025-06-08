@@ -12,7 +12,6 @@
 #include <SDL_image.h>//Í¼Ïñ¿â
 #include <SDL2_gfxPrimitives.h>
 
-class Scene;
 
 class GameManager :public Manager<GameManager>
 {

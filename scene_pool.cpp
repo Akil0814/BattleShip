@@ -32,7 +32,7 @@ Scene* ScenePool::get_scene(SceneType type)
 
 	case SceneType::ClassicSetup:
 		if (cheek_invalid(classic_setup_scene))
-			//menu_scene = new MenuScene;
+			classic_setup_scene = new ClassicSetupScene;
 		return classic_setup_scene;
 		break;
 

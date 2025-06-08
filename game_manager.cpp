@@ -86,7 +86,7 @@ SDL_Renderer* GameManager::get_renderer()const
 	return renderer;
 }
 
-void switch_scene(SceneType type)
+void GameManager::switch_scene(SceneType type)
 {
 	SceneManager::instance()->switch_to(ScenePool::instance()->get_scene(type));
 }

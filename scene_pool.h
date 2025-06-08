@@ -2,6 +2,8 @@
 #include"scene.h"
 #include"scene_type.h"
 #include "menu_scene.h"
+#include"classic_setup_scene.h"
+
 class ScenePool
 {
 public:
