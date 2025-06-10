@@ -1,6 +1,5 @@
 #include "button.h"
 
-
 Button::Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 	Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up)
 {
@@ -112,6 +111,8 @@ void Button::on_render()
 
 void Button::process_event(const SDL_Event& event)
 {
+	if (on_hold)
+		return;
 
 	switch (event.type)
 	{
@@ -139,6 +140,7 @@ void Button::process_event(const SDL_Event& event)
 		{
 			if (status == Status::Pushed)
 			{
+				time_on_click++;
 				status = Status::Idle;
 				if (have_sound_effect_up)
 					Mix_PlayChannel(-1, sound_effect_up, 0);
@@ -161,7 +163,6 @@ bool Button::check_cursor_hit(int x, int y)const
 {
 	return x >= rect_button.x && x < (rect_button.x + rect_button.w) &&
 		y >= rect_button.y && y < (rect_button.y + rect_button.h);
-
 }
 
 void Button::set_on_click(std::function<void()> func)
@@ -172,4 +173,44 @@ void Button::set_on_click(std::function<void()> func)
 Button::Status Button::get_status()const
 {
 	return status;
+}
+
+void Button::set_status(Status set_status)
+{
+	status = set_status;
+}
+
+void Button::change_rect_button(SDL_Rect new_rect_button)
+{
+	rect_button = new_rect_button;
+}
+
+void Button::change_rect_message(SDL_Rect new_rect_message)
+{
+	rect_message = new_rect_message;
+}
+
+void Button::change_texture_message(SDL_Texture* new_texture_message)
+{
+	texture_message = new_texture_message;
+}
+
+void Button::set_on_holed()
+{
+	on_hold = true;
+}
+
+void Button::reset_on_holed()
+{
+	on_hold = false;
+}
+
+int Button::get_time_on_click()const
+{
+	return time_on_click;
+}
+
+bool Button::check_on_holed()const
+{
+	return on_hold;
 }

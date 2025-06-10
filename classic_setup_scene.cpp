@@ -26,7 +26,7 @@ void ClassicSetupScene::on_update(double delta)
 }
 void ClassicSetupScene::on_render()
 {
-
+	SDL_SetRenderDrawColor(GameManager::instance()->get_renderer(),water_color.r,water_color.g,water_color.b,water_color.a);
 }
 void ClassicSetupScene::on_input(const SDL_Event& event)
 {

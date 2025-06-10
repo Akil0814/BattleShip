@@ -6,6 +6,8 @@
 #include"button.h"
 #include"scene_type.h"
 #include"game_manager.h"
+#include"resources_manager.h"
+#include"txt_texture_manager.h"
 
 class MenuScene :public Scene
 {

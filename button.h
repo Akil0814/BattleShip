@@ -3,9 +3,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL2_gfxPrimitives.h>
-#include <SDL_mixer.h>//ÒôÆµ¿â
-#include <SDL_image.h>//Í¼Ïñ¿â
-
+#include <SDL_mixer.h>
+#include <SDL_image.h>
 #include<string>
 #include<iostream>
 #include<functional>
@@ -38,7 +37,18 @@ public:
 	void on_render();
 	void process_event(const SDL_Event& event);
 	void set_on_click(std::function<void()> func);
+	void set_status(Status status);
+
+	void change_rect_button(SDL_Rect new_rect_button);
+	void change_rect_message(SDL_Rect new_rect_message);
+	void change_texture_message(SDL_Texture* new_texture_message);
+
+	void set_on_holed();
+	void reset_on_holed();
+
+	int get_time_on_click()const;
 	Status get_status()const;
+	bool check_on_holed()const;
 
 private:
 
@@ -79,7 +89,8 @@ private:
 	bool have_texture = false;
 	bool have_message = false;
 
-	//bool will_hold = false;
-};
+	bool on_hold = false;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	int time_on_click = 0;
+
+};

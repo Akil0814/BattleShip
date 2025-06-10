@@ -8,6 +8,13 @@
 
 enum class ResID
 {
+	Font_16,
+	Font_24,
+	Font_48,
+	Font_72,
+	Font_128,
+
+
 
 };
 
@@ -26,13 +33,10 @@ public:
 
 	bool load_from_file(SDL_Renderer* renderer);
 
-	const FontPool& get_font_pool();
-
-	const SoundPool& get_sound_pool();
-
-	const MusicPool& get_music_pool();
-
-	const TexturePool& get_texture_pool();
+	TTF_Font* get_font(ResID id) const;
+	Mix_Chunk* get_sound(ResID id) const;
+	Mix_Music* get_music(ResID id) const;
+	SDL_Texture* get_texture(ResID id)const;
 
 protected:
 	ResourcesManager() {};

@@ -2,26 +2,64 @@
 
 bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 {
+	font_pool[ResID::Font_16] = TTF_OpenFont("res/Basketball.otf", 16);
+	font_pool[ResID::Font_24] = TTF_OpenFont("res/Basketball.otf", 24);
+	font_pool[ResID::Font_48] = TTF_OpenFont("res/Basketball.otf", 48);
+	font_pool[ResID::Font_72] = TTF_OpenFont("res/Basketball.otf", 72);
+	font_pool[ResID::Font_128] = TTF_OpenFont("res/Basketball.otf", 128);
+
+
+
+	for (const auto& pair : font_pool)
+		if (!pair.second) return false;
 
 	return true;
 }
 
-const FontPool& ResourcesManager::get_font_pool()
+TTF_Font* ResourcesManager::get_font(ResID id) const
 {
-	return font_pool;
+	auto it = font_pool.find(id);
+
+	if (it == font_pool.end())
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Font ID %d not loaded", int(id));
+		return nullptr;
+	}
+	return it->second;
 }
 
-const SoundPool& ResourcesManager::get_sound_pool()
+Mix_Chunk* ResourcesManager::get_sound(ResID id) const
 {
-	return sound_pool;
+	auto it = sound_pool.find(id);
+
+	if (it == sound_pool.end())
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Font ID %d not loaded", int(id));
+		return nullptr;
+	}
+	return it->second;
 }
 
-const MusicPool& ResourcesManager::get_music_pool()
+Mix_Music* ResourcesManager::get_music(ResID id) const
 {
-	return music_pool;
+	auto it = music_pool.find(id);
+
+	if (it == music_pool.end())
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Font ID %d not loaded", int(id));
+		return nullptr;
+	}
+	return it->second;
 }
 
-const TexturePool& ResourcesManager::get_texture_pool()
+SDL_Texture* ResourcesManager::get_texture(ResID id)const
 {
-	return texture_pool;
+	auto it = texture_pool.find(id);
+
+	if (it == texture_pool.end())
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Font ID %d not loaded", int(id));
+		return nullptr;
+	}
+	return it->second;
 }

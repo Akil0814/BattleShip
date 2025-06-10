@@ -38,6 +38,9 @@
     <ClCompile Include="classic_setup_scene.cpp">
       <Filter>scene</Filter>
     </ClCompile>
+    <ClCompile Include="txt_texture_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
@@ -71,5 +74,9 @@
     <ClInclude Include="classic_setup_scene.h">
       <Filter>scene</Filter>
     </ClInclude>
+    <ClInclude Include="txt_texture_manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h" />
   </ItemGroup>
 </Project>

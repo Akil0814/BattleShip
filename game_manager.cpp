@@ -15,6 +15,8 @@ GameManager::GameManager()
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);//硬件加速 垂直同步 目标纹理
 	init_assert(renderer, u8"SDL_CreateRenderer Error");
 
+	init_assert(ResourcesManager::instance()->load_from_file(renderer), u8"加载游戏资源失败！");
+
 }
 
 GameManager::~GameManager()
@@ -49,7 +51,6 @@ int GameManager::run(int argc, char** argv)
 
 		on_update(delta);
 
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
 		on_render();
