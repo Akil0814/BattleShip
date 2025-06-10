@@ -3,6 +3,7 @@
 #include"button.h"
 #include"scene_type.h"
 #include"game_manager.h"
+#include"animation.h"
 
 class ClassicSetupScene :public Scene
 {
@@ -18,5 +19,6 @@ public:
 	void on_input(const SDL_Event& event);
 
 private:
-
+	Animation missile;
+	Atlas texture;
 };

@@ -2,7 +2,7 @@
 
 MenuScene::MenuScene()
 	:classic(GameManager::instance()->get_renderer(), { 100,50,200,70 }, { 100,50,200,70 },
-			 TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(),ResourcesManager::instance()->get_font(ResID::Font_72), "Classic Game Mod"),
+			 TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(),ResourcesManager::instance()->get_font(ResID::Font_72), "Classic PVE"),
 			 nullptr, nullptr)
 {
 	classic.set_on_click([]

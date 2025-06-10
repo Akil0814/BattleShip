@@ -51,7 +51,7 @@ private:
 
 private:
 
-	const int FPS = 60;
+	const int FPS = 30;
 	bool is_quit = false;
 
 	SDL_Event event;

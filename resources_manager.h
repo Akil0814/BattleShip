@@ -14,7 +14,9 @@ enum class ResID
 	Font_72,
 	Font_128,
 
-
+	Tex_Missile_0001,
+	Tex_Missile_0002,
+	Tex_Missile_0003,
 
 };
 

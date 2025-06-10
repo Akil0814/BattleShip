@@ -41,6 +41,11 @@
     <ClCompile Include="txt_texture_manager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
+    <ClCompile Include="timer.cpp" />
+    <ClCompile Include="animation.cpp" />
+    <ClCompile Include="atlas.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
@@ -78,5 +83,9 @@
       <Filter>manager</Filter>
     </ClInclude>
     <ClInclude Include="timer.h" />
+    <ClInclude Include="animation.h" />
+    <ClInclude Include="atlas.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

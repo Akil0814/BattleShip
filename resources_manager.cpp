@@ -8,9 +8,14 @@ bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 	font_pool[ResID::Font_72] = TTF_OpenFont("res/Basketball.otf", 72);
 	font_pool[ResID::Font_128] = TTF_OpenFont("res/Basketball.otf", 128);
 
-
-
 	for (const auto& pair : font_pool)
+		if (!pair.second) return false;
+
+	texture_pool[ResID::Tex_Missile_0001] = IMG_LoadTexture(renderer, "res/missile_0001.png");
+	texture_pool[ResID::Tex_Missile_0002] = IMG_LoadTexture(renderer, "res/missile_0002.png");
+	texture_pool[ResID::Tex_Missile_0003] = IMG_LoadTexture(renderer, "res/missile_0003.png");
+
+	for (const auto& pair : texture_pool)
 		if (!pair.second) return false;
 
 	return true;
