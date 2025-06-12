@@ -16,6 +16,7 @@ GameManager::GameManager()
 	init_assert(renderer, u8"SDL_CreateRenderer Error");
 
 	init_assert(ResourcesManager::instance()->load_from_file(renderer), u8"加载游戏资源失败！");
+	init_assert(AtlasManager::instance()->load_atlas(), u8"加载游戏图集资源失败！");
 
 }
 

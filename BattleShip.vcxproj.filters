@@ -11,6 +11,30 @@
     <Filter Include="scene">
       <UniqueIdentifier>{ecadeca9-2870-45c0-b5a3-8822cbcf8dda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="atlas">
+      <UniqueIdentifier>{68b70491-6fee-494e-afa0-f6cd6c15bc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="animation">
+      <UniqueIdentifier>{7ef6624d-434c-425c-ac4e-634ce8dbac75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timer">
+      <UniqueIdentifier>{96104ac5-6c16-41e8-8a35-e3995d7c069d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="button">
+      <UniqueIdentifier>{30273ebe-fdbf-4bc1-811c-19c602f66766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{d6c7a769-1f4d-4c81-b23d-185d1fa27d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="board data">
+      <UniqueIdentifier>{cc297047-b54c-4b40-95e5-b812bc162002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ship">
+      <UniqueIdentifier>{5843bb04-c328-449b-bfb3-2ff7a62a747e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bullet">
+      <UniqueIdentifier>{0276a9ab-942e-4bad-87a3-6c144cc71cdf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -31,7 +55,6 @@
     <ClCompile Include="scene_manager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
-    <ClCompile Include="button.cpp" />
     <ClCompile Include="scene_pool.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -41,10 +64,29 @@
     <ClCompile Include="txt_texture_manager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
-    <ClCompile Include="timer.cpp" />
-    <ClCompile Include="animation.cpp" />
     <ClCompile Include="atlas.cpp">
-      <Filter>源文件</Filter>
+      <Filter>atlas</Filter>
+    </ClCompile>
+    <ClCompile Include="atlas_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>animation</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>timer</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>button</Filter>
+    </ClCompile>
+    <ClCompile Include="board.cpp">
+      <Filter>board data</Filter>
+    </ClCompile>
+    <ClCompile Include="tile.h">
+      <Filter>board data</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +96,6 @@
     <ClInclude Include="game_manager.h">
       <Filter>manager</Filter>
     </ClInclude>
-    <ClInclude Include="button.h" />
     <ClInclude Include="scene.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -82,10 +123,29 @@
     <ClInclude Include="txt_texture_manager.h">
       <Filter>manager</Filter>
     </ClInclude>
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="animation.h" />
     <ClInclude Include="atlas.h">
-      <Filter>源文件</Filter>
+      <Filter>atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="atlas_manager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>animation</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>timer</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>button</Filter>
+    </ClInclude>
+    <ClInclude Include="board.h">
+      <Filter>board data</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="ship.h">
+      <Filter>ship</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

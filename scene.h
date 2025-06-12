@@ -19,7 +19,6 @@ protected:
 	int WINDOW_WIDTH = 10;
 	int WINDOW_HEIGHT = 10;
 
-	SDL_Color water_color = { 64,224,208,255 };
 	SDL_Color back_ground_color = { 100,100,100,255 };
 
 };

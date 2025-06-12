@@ -7,9 +7,9 @@ Animation::Animation()
 		[this]()
 		{
 			idx_frame++;
-			if (idx_frame >= texture_list.get_size())
+			if (idx_frame >= texture_list->get_size())
 			{
-				idx_frame = is_loop ? 0 : texture_list.get_size() - 1;
+				idx_frame = is_loop ? 0 : texture_list->get_size() - 1;
 				if (!is_loop && on_finished)
 					on_finished();
 			}
@@ -17,7 +17,7 @@ Animation::Animation()
 	);
 }
 
-void Animation::set_frame(const Atlas& atlas)
+void Animation::set_frame(const Atlas* atlas)
 {
 	texture_list = atlas;
 }
@@ -51,7 +51,7 @@ void Animation::on_update(double delta)
 
 void Animation::on_render(SDL_Renderer* renderer, SDL_Rect& rect, double angle = 0) const
 {
-	SDL_Texture* tex = texture_list.get_texture(idx_frame);
+	SDL_Texture* tex = texture_list->get_texture(idx_frame);
 	if (!tex)
 		return;
 
@@ -65,7 +65,7 @@ void Animation::on_render(SDL_Renderer* renderer, SDL_Rect& rect, double angle =
 void Animation::on_render(SDL_Renderer* renderer, const SDL_Point& pos_dst, double angle) const
 {
     // 取当前帧纹理
-    SDL_Texture* tex = texture_list.get_texture(idx_frame);
+    SDL_Texture* tex = texture_list->get_texture(idx_frame);
     if (!tex) {
         return;
     }
@@ -96,4 +96,14 @@ void Animation::on_render(SDL_Renderer* renderer, const SDL_Point& pos_dst, doub
         &center,
         SDL_FLIP_NONE
     );
+}
+
+void Animation::pause()
+{
+    timer.pause();
+}
+
+void Animation::resume()
+{
+    timer.resume();
 }

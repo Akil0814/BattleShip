@@ -10,16 +10,24 @@ int Atlas::get_size() const
     return static_cast<int>(texture_list.size());
 }
 
-void Atlas::add_Texture(SDL_Texture* new_texture)
+bool Atlas::add_Texture(SDL_Texture* new_texture)
 {
     texture_list.push_back(new_texture);
 }
 
-void Atlas::add_Textures(std::initializer_list<SDL_Texture*> textures)
+bool Atlas::add_Textures(std::initializer_list<SDL_Texture*> textures)
 {
-    for (auto tex : textures) {
+    if (textures.size() == 0)
+        return false;
+
+    for (auto tex : textures) 
+    {
+        if (tex==nullptr)
+            return false;
         texture_list.push_back(tex);
     }
+
+    return true;
 }
 
 SDL_Texture* Atlas::get_texture(size_t num)const

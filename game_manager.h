@@ -3,6 +3,7 @@
 #include<iostream>
 
 #include "scene_manager.h"
+#include"atlas_manager.h"
 #include"scene_pool.h"
 #include"scene_type.h" 
 
@@ -51,7 +52,7 @@ private:
 
 private:
 
-	const int FPS = 30;
+	const int FPS = 60;
 	bool is_quit = false;
 
 	SDL_Event event;
