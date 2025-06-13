@@ -11,7 +11,11 @@ public:
     Status getStatus() const
     {
         return status;
+    }
 
+    void change_status(Status status)
+    {
+        this->status = status;
     }
 
     bool hasShip()const

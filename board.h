@@ -3,6 +3,7 @@
 #include <SDL.h>
 
 #include"tile.h"
+#include"bullet.h"
 #include"animation.h"
 #include"resources_manager.h"
 #include"atlas_manager.h"
@@ -16,7 +17,7 @@ public:
 	~Board();
 
 
-	void on_render(SDL_Renderer* renderer)const;
+	void on_render(SDL_Renderer* renderer);
 	void on_update(double delta);
 	void on_input(const SDL_Event& event);
 
@@ -42,11 +43,9 @@ private:
 	bool click_in_board = false;
 
 	bool try_hit = false;
-	bool try_hit_and_miss = false;
-	bool get_hit = false;
 
 	bool find_target = false;
-	bool get_to_pos = false;
+	bool hit_settlement = false;
 
 	int board_render_x = 0;
 	int board_render_y = 0;
@@ -58,6 +57,8 @@ private:
 	int row = 10;
 	int col = 10;
 
+	Bullet* missile;
+
 	TileBoard board;
 
 	SDL_Texture* set_target=nullptr;
@@ -67,7 +68,6 @@ private:
 
 
 	Animation get_target;
-	Animation missile;
 
 	Animation miss_target_effect;
 	Animation explosion;

@@ -20,26 +20,18 @@ Board::Board()
 	get_target.set_loop(false);
 	get_target.set_on_finished([=]
 		{
-			on_animation = false;//
 			find_target = true;
 		});
-
-	missile.set_frame(AtlasManager::instance()->get_atlas(AtlasID::Missile));
-	missile.set_interval(0.1);
-	missile.set_loop(true);
-	missile.set_on_finished([=]
-		{
-			try_hit = false;
-		});
-
 
 	miss_target_effect.set_frame(AtlasManager::instance()->get_atlas(AtlasID::MissingTarget));
 	miss_target_effect.set_interval(0.1);
 	miss_target_effect.set_loop(false);
 	miss_target_effect.set_on_finished([=]
 		{
-			try_hit_and_miss = false;
+			hit_settlement = false;
+			board[index_x][index_y].change_status(Tile::Status::Miss);
 			miss_target_effect.reset();
+
 		});
 
 	explosion.set_frame(AtlasManager::instance()->get_atlas(AtlasID::ExplosionBig));
@@ -47,6 +39,10 @@ Board::Board()
 	explosion.set_loop(false);
 	explosion.set_on_finished([=]
 		{
+			hit_settlement = false;
+			board[index_x][index_y].change_status(Tile::Status::Hit);
+			explosion.reset();
+
 		});
 
 	explosion_twice.set_frame(AtlasManager::instance()->get_atlas(AtlasID::Explosion));
@@ -64,7 +60,7 @@ Board::~Board()
 }
 
 
-void Board::on_render(SDL_Renderer* renderer)const
+void Board::on_render(SDL_Renderer* renderer)
 {
 
 	//深海蓝的棋盘背景矩形
@@ -114,8 +110,6 @@ void Board::on_render(SDL_Renderer* renderer)const
 
 
 	SDL_Rect rect = { index_x * SIZE_TILE, index_y * SIZE_TILE,SIZE_TILE,SIZE_TILE };
-	if (try_hit_and_miss)
-		miss_target_effect.on_render(renderer, rect, 0);
 
 	if (try_hit)
 	{
@@ -123,8 +117,36 @@ void Board::on_render(SDL_Renderer* renderer)const
 		get_target.on_render(renderer, rect, 0);
 	}
 
-	if (get_hit)
-		explosion.on_render(renderer, rect, 0);
+	if (missile)
+	{
+		if (find_target)
+		{
+			missile->on_render(renderer);
+		}
+
+		if (find_target && !missile->is_valid())
+		{
+			hit_settlement = true;
+			find_target = false;
+			try_hit = false;
+			on_animation = false;
+			delete missile;
+			missile = nullptr;
+		}
+	}
+
+	if (hit_settlement)
+	{
+		if (board[index_x][index_y].hasShip())
+		{
+			explosion.on_render(renderer, rect, 0);
+		}
+		else
+		{
+			miss_target_effect.on_render(renderer, rect, 0);
+		}
+	}
+
 
 	if (move_in_board)
 	{
@@ -137,11 +159,21 @@ void Board::on_render(SDL_Renderer* renderer)const
 
 void Board::on_update(double delta)
 {
-	missile.on_update(delta);
-	miss_target_effect.on_update(delta);
-	explosion_twice.on_update(delta);
-	get_target.on_update(delta);
-	explosion.on_update(delta);
+	if (try_hit)
+	{
+		get_target.on_update(delta);
+	}
+
+	if (hit_settlement)
+	{
+		explosion.on_update(delta);
+		miss_target_effect.on_update(delta);
+	}
+
+	//explosion_twice.on_update(delta);
+
+	if(missile)
+		missile->on_update(delta);
 }
 
 void Board::on_input(const SDL_Event& event)
@@ -198,7 +230,8 @@ void Board::on_mouse_click(const SDL_Event& event)
 				if (board[index_x][index_y].getStatus() == Tile::Status::Unknown ||
 					board[index_x][index_y].getStatus() == Tile::Status::SomeThing)
 				{
-					get_target.reset();
+					missile = new Bullet;
+					missile->fire({ 0,0 }, mouse_click_pos, 300);
 					try_hit = true;
 					on_animation = true;
 				}
@@ -211,10 +244,7 @@ void Board::on_mouse_click(const SDL_Event& event)
 		}
 	}
 	else
-	{
 		click_in_board = false;
-
-	}
 
 
 }

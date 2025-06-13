@@ -142,8 +142,10 @@ copy /Y "%DLL_SRC_DIR%\SDL2_ttf\lib\x64\SDL2_ttf.dll" "$(OutDir)"
     <ClCompile Include="atlas.cpp" />
     <ClCompile Include="atlas_manager.cpp" />
     <ClCompile Include="board.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="classic_setup_scene.cpp" />
+    <ClCompile Include="effect_manager.cpp" />
     <ClCompile Include="game_manager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_scene.cpp" />
@@ -161,8 +163,10 @@ copy /Y "%DLL_SRC_DIR%\SDL2_ttf\lib\x64\SDL2_ttf.dll" "$(OutDir)"
     <ClInclude Include="atlas.h" />
     <ClInclude Include="atlas_manager.h" />
     <ClInclude Include="board.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="classic_setup_scene.h" />
+    <ClInclude Include="effect_manager.h" />
     <ClInclude Include="game_manager.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="menu_scene.h" />

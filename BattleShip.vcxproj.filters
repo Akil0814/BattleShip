@@ -88,6 +88,12 @@
     <ClCompile Include="player.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="effect_manager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
@@ -146,6 +152,12 @@
     </ClInclude>
     <ClInclude Include="ship.h">
       <Filter>ship</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="effect_manager.h">
+      <Filter>manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
