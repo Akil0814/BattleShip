@@ -35,6 +35,9 @@
     <Filter Include="bullet">
       <UniqueIdentifier>{0276a9ab-942e-4bad-87a3-6c144cc71cdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="effect">
+      <UniqueIdentifier>{f6b10d95-bc94-4250-aff9-90ca66a86366}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="effect_manager.cpp">
       <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="effect_manager.h">
       <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

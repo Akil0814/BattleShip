@@ -8,7 +8,7 @@ public:
 
     Tile() = default;
 
-    Status getStatus() const
+    Status get_status() const
     {
         return status;
     }
@@ -18,7 +18,7 @@ public:
         this->status = status;
     }
 
-    bool hasShip()const
+    bool has_ship()const
     {
         return have_ship;
 

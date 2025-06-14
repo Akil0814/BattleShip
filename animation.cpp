@@ -10,8 +10,11 @@ Animation::Animation()
 			if (idx_frame >= texture_list->get_size())
 			{
 				idx_frame = is_loop ? 0 : texture_list->get_size() - 1;
-				if (!is_loop && on_finished)
-					on_finished();
+                if (!is_loop && on_finished)
+                {
+                    on_finished();
+                    is_finish = true;
+                }
 			}
 		}
 	);
@@ -36,6 +39,7 @@ void Animation::set_loop(bool is_loop)
 
 void Animation::set_interval(double interval)
 {
+    this->interval = interval;
 	timer.set_wait_time(interval);
 }
 
@@ -51,6 +55,7 @@ void Animation::on_update(double delta)
 
 void Animation::on_render(SDL_Renderer* renderer, SDL_Rect& rect, double angle = 0) const
 {
+
 	SDL_Texture* tex = texture_list->get_texture(idx_frame);
 	if (!tex)
 		return;
@@ -106,4 +111,13 @@ void Animation::pause()
 void Animation::resume()
 {
     timer.resume();
+}
+
+bool Animation::is_finished() const {
+    return is_finish;
+}
+
+std::function<void()> Animation::get_call_back()const
+{
+    return on_finished;
 }

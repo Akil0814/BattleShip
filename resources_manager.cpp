@@ -19,8 +19,8 @@ bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 	texture_pool[ResID::Tex_Tile_unknow] = IMG_LoadTexture(renderer, "res/tile_unknow.png");
 
 	texture_pool[ResID::Tex_Missile_0001] = IMG_LoadTexture(renderer, "res/missile_on_fire/missile_0001.png");
-	texture_pool[ResID::Tex_Missile_0002] = IMG_LoadTexture(renderer, "res/missile_on_fire/missile_0001.png");
-	texture_pool[ResID::Tex_Missile_0003] = IMG_LoadTexture(renderer, "res/missile_on_fire/missile_0001.png");
+	texture_pool[ResID::Tex_Missile_0002] = IMG_LoadTexture(renderer, "res/missile_on_fire/missile_0002.png");
+	texture_pool[ResID::Tex_Missile_0003] = IMG_LoadTexture(renderer, "res/missile_on_fire/missile_0003.png");
 
 	texture_pool[ResID::Tex_GetTarget_0001] = IMG_LoadTexture(renderer, "res/get_target/get_target_0001.png");
 	texture_pool[ResID::Tex_GetTarget_0002] = IMG_LoadTexture(renderer, "res/get_target/get_target_0002.png");

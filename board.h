@@ -6,7 +6,7 @@
 #include"bullet.h"
 #include"animation.h"
 #include"resources_manager.h"
-#include"atlas_manager.h"
+#include"effect_manager.h"
 
 class Board
 {
@@ -30,7 +30,7 @@ public:
 	static SDL_Texture* tile_unknown;
 
 private:
-
+	void draw_board(SDL_Renderer* renderer);
 	void on_mouse_click(const SDL_Event& e);
 	void on_mouse_move(const SDL_Event& e);
 	bool is_inside(int x, int y) const;
@@ -65,12 +65,11 @@ private:
 
 	SDL_Point mouse_pos = {0};
 	SDL_Point mouse_click_pos = { 0 };
+	SDL_Point mouse_click_tile_center = {0};
 
+	SDL_Rect current_rect;
+	SDL_Rect rect_select_target;
+	SDL_Rect rect_water_splash;
+	SDL_Rect rect_explosion_target;
 
-	Animation get_target;
-
-	Animation miss_target_effect;
-	Animation explosion;
-
-	Animation explosion_twice;
 };

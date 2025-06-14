@@ -15,43 +15,24 @@ Board::Board()
 
 	board.assign(row, std::vector<Tile>(col));
 
-	get_target.set_frame(AtlasManager::instance()->get_atlas(AtlasID::GetTarget));
-	get_target.set_interval(0.15);
-	get_target.set_loop(false);
-	get_target.set_on_finished([=]
+	EffectManager::instance()->set_on_finished(EffectID::SelectTarget, [this]()
 		{
+			missile = new Bullet;
+			missile->fire({ 0,0 }, mouse_click_tile_center, 400);
 			find_target = true;
 		});
 
-	miss_target_effect.set_frame(AtlasManager::instance()->get_atlas(AtlasID::MissingTarget));
-	miss_target_effect.set_interval(0.1);
-	miss_target_effect.set_loop(false);
-	miss_target_effect.set_on_finished([=]
+	EffectManager::instance()->set_on_finished(EffectID::WaterSplash_single, [this]()
 		{
-			hit_settlement = false;
+			on_animation = false;
 			board[index_x][index_y].change_status(Tile::Status::Miss);
-			miss_target_effect.reset();
-
 		});
 
-	explosion.set_frame(AtlasManager::instance()->get_atlas(AtlasID::ExplosionBig));
-	explosion.set_interval(0.1);
-	explosion.set_loop(false);
-	explosion.set_on_finished([=]
+	EffectManager::instance()->set_on_finished(EffectID::Explosion, [this]()
 		{
-			hit_settlement = false;
+			on_animation = false;
 			board[index_x][index_y].change_status(Tile::Status::Hit);
-			explosion.reset();
-
 		});
-
-	explosion_twice.set_frame(AtlasManager::instance()->get_atlas(AtlasID::Explosion));
-	explosion_twice.set_interval(0.1);
-	explosion_twice.set_loop(false);
-	explosion_twice.set_on_finished([=]
-		{
-		});
-
 }
 
 Board::~Board()
@@ -59,39 +40,17 @@ Board::~Board()
 
 }
 
-
 void Board::on_render(SDL_Renderer* renderer)
 {
-
-	//深海蓝的棋盘背景矩形
-	SDL_Rect board_rect{ board_render_x, board_render_y, col * SIZE_TILE, row * SIZE_TILE };
-	SDL_SetRenderDrawColor(renderer, 30, 63, 102, 255);
-	SDL_RenderFillRect(renderer, &board_rect);
-
-	//半透明网格线
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, 10, 55, 50, 120);
-
-	// 竖线
-	for (int i = 0; i <= col; ++i) {
-		int x = board_render_x + i * SIZE_TILE;
-		SDL_RenderDrawLine(renderer, x, board_render_y, x, board_render_y + row * SIZE_TILE);
-	}
-
-	// 横线
-	for (int j = 0; j <= row; ++j) {
-		int y = board_render_y + j * SIZE_TILE;
-		SDL_RenderDrawLine(renderer, board_render_x, y, board_render_x + col * SIZE_TILE, y);
-	}
-
+	draw_board(renderer);
 
 	for (int i = 0; i < row; i++)
 	{
 		for (int j = 0; j < col; j++)
 		{
-			SDL_Rect rect = { j * SIZE_TILE,i * SIZE_TILE,SIZE_TILE,SIZE_TILE };
+			SDL_Rect rect = { i * SIZE_TILE,j * SIZE_TILE,SIZE_TILE,SIZE_TILE };
 
-			switch (board[i][j].getStatus())
+			switch (board[i][j].get_status())
 			{
 			case Tile::Status::Miss:
 				SDL_RenderCopy(renderer, tile_miss, nullptr, &rect);
@@ -108,45 +67,10 @@ void Board::on_render(SDL_Renderer* renderer)
 		}
 	}
 
+	EffectManager::instance()->on_render(renderer);
 
-	SDL_Rect rect = { index_x * SIZE_TILE, index_y * SIZE_TILE,SIZE_TILE,SIZE_TILE };
-
-	if (try_hit)
-	{
-		rect = { index_x * SIZE_TILE - 20,index_y * SIZE_TILE - 20,SIZE_TILE + 40,SIZE_TILE + 40 };
-		get_target.on_render(renderer, rect, 0);
-	}
-
-	if (missile)
-	{
-		if (find_target)
-		{
-			missile->on_render(renderer);
-		}
-
-		if (find_target && !missile->is_valid())
-		{
-			hit_settlement = true;
-			find_target = false;
-			try_hit = false;
-			on_animation = false;
-			delete missile;
-			missile = nullptr;
-		}
-	}
-
-	if (hit_settlement)
-	{
-		if (board[index_x][index_y].hasShip())
-		{
-			explosion.on_render(renderer, rect, 0);
-		}
-		else
-		{
-			miss_target_effect.on_render(renderer, rect, 0);
-		}
-	}
-
+	if (find_target)
+		missile->on_render(renderer);
 
 	if (move_in_board)
 	{
@@ -154,26 +78,29 @@ void Board::on_render(SDL_Renderer* renderer)
 
 		SDL_RenderCopy(renderer, set_target, nullptr, &target_rect);
 	}
-
 }
 
 void Board::on_update(double delta)
 {
-	if (try_hit)
+	EffectManager::instance()->on_update(delta);
+	if (find_target)
 	{
-		get_target.on_update(delta);
-	}
-
-	if (hit_settlement)
-	{
-		explosion.on_update(delta);
-		miss_target_effect.on_update(delta);
-	}
-
-	//explosion_twice.on_update(delta);
-
-	if(missile)
 		missile->on_update(delta);
+		if (!missile->is_valid())
+		{
+			find_target = false;
+			delete missile;
+
+			if (board[index_x][index_y].has_ship())
+			{
+				EffectManager::instance()->show_effect(EffectID::Explosion, rect_explosion_target, 0);
+			}
+			else
+			{
+				EffectManager::instance()->show_effect(EffectID::WaterSplash_single, rect_water_splash, 0);
+			}
+		}
+	}
 }
 
 void Board::on_input(const SDL_Event& event)
@@ -214,6 +141,7 @@ void Board::on_mouse_click(const SDL_Event& event)
 {
 	if (is_inside(event.button.x, event.button.y))
 	{
+		SDL_ShowCursor(SDL_DISABLE);
 		click_in_board = true;
 
 		if (event.type == SDL_MOUSEBUTTONUP)
@@ -227,26 +155,28 @@ void Board::on_mouse_click(const SDL_Event& event)
 				index_x = (mouse_click_pos.x- board_render_x)/SIZE_TILE;
 				index_y = (mouse_click_pos.y- board_render_x)/SIZE_TILE;
 
-				if (board[index_x][index_y].getStatus() == Tile::Status::Unknown ||
-					board[index_x][index_y].getStatus() == Tile::Status::SomeThing)
+				mouse_click_tile_center.x = board_render_x + index_x * SIZE_TILE + SIZE_TILE / 2;
+				mouse_click_tile_center.y = board_render_y + index_y * SIZE_TILE + SIZE_TILE / 2;
+
+				if (board[index_x][index_y].get_status() == Tile::Status::Unknown ||
+					board[index_x][index_y].get_status() == Tile::Status::SomeThing)
 				{
-					missile = new Bullet;
-					missile->fire({ 0,0 }, mouse_click_pos, 300);
-					try_hit = true;
+					rect_select_target = { board_render_x + index_x * SIZE_TILE - 20,board_render_y + index_y * SIZE_TILE - 20,SIZE_TILE + 40,SIZE_TILE + 40};
+					rect_water_splash = { board_render_x + index_x * SIZE_TILE - 20,board_render_y + index_y * SIZE_TILE,SIZE_TILE + 40,SIZE_TILE };
+
+					rect_explosion_target = { board_render_x + index_x * SIZE_TILE - 20,board_render_y + index_y * SIZE_TILE - 40 , SIZE_TILE + 40,SIZE_TILE + 40 };
+					EffectManager::instance()->show_effect(EffectID::SelectTarget, rect_select_target, 0);
+
 					on_animation = true;
 				}
 			}
 		}
-		else
-		{
-			//sound effect
-
-		}
 	}
 	else
+	{
 		click_in_board = false;
-
-
+		SDL_ShowCursor(SDL_ENABLE);
+	}
 }
 
 bool Board::is_inside(int x, int y) const
@@ -255,4 +185,28 @@ bool Board::is_inside(int x, int y) const
 		&& x < board_render_x + SIZE_TILE * col
 		&& y >= board_render_y
 		&& y < board_render_y + SIZE_TILE * row;
+}
+
+void  Board::draw_board(SDL_Renderer* renderer)
+{
+	//深海蓝的棋盘背景矩形
+	SDL_Rect board_rect{ board_render_x, board_render_y, col * SIZE_TILE, row * SIZE_TILE };
+	SDL_SetRenderDrawColor(renderer, 30, 63, 102, 255);
+	SDL_RenderFillRect(renderer, &board_rect);
+
+	//半透明网格线
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, 10, 55, 50, 120);
+
+	// 竖线
+	for (int i = 0; i <= col; ++i) {
+		int x = board_render_x + i * SIZE_TILE;
+		SDL_RenderDrawLine(renderer, x, board_render_y, x, board_render_y + row * SIZE_TILE);
+	}
+
+	// 横线
+	for (int j = 0; j <= row; ++j) {
+		int y = board_render_y + j * SIZE_TILE;
+		SDL_RenderDrawLine(renderer, board_render_x, y, board_render_x + col * SIZE_TILE, y);
+	}
 }

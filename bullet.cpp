@@ -1,7 +1,6 @@
 #include"bullet.h"
 
 Bullet::Bullet() {
-    // 设置动画帧
     animation.set_frame(AtlasManager::instance()->get_atlas(AtlasID::Missile));
     animation.set_interval(0.1);
     animation.set_loop(true);
@@ -9,8 +8,8 @@ Bullet::Bullet() {
 
 Bullet::~Bullet() {}
 
-void Bullet::fire(const SDL_Point& start, const SDL_Point& end, double spd) {
-    // 初始化位置和方向
+void Bullet::fire(const SDL_Point& start, const SDL_Point& end, double spd)
+{
     fx = static_cast<double>(start.x);
     fy = static_cast<double>(start.y);
     end_x = static_cast<double>(end.x);
@@ -37,11 +36,9 @@ void Bullet::on_update(double delta)
 {
     if (valid)
     {
-        // 更新位置
         fx += dirX * speed * delta;
         fy += dirY * speed * delta;
 
-        // 检查是否到达或超过终点，如果是则设置为无效
         double toEndX = end_x - fx;
         double toEndY = end_y - fy;
         if ((toEndX * dirX + toEndY * dirY) <= 0.0)
@@ -50,9 +47,6 @@ void Bullet::on_update(double delta)
         }
     }
 
-
-
-    // 更新动画
     animation.on_update(delta);
 }
 
