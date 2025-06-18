@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include"board.h"
 #include"ship.h"
 
 class Player
@@ -14,5 +15,6 @@ private:
 	int num_of_missile = 0;
 	bool is_win = false;
 	std::vector<Ship*> ship_list;
+	Board board;
 };
 

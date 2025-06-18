@@ -12,6 +12,7 @@ bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 		if (!pair.second) return false;
 
 	texture_pool[ResID::Tex_SetTarget] = IMG_LoadTexture(renderer, "res/set_target.png");
+	texture_pool[ResID::Tex_Ship] = IMG_LoadTexture(renderer, "res/ship/Ship5.png");
 
 
 	texture_pool[ResID::Tex_Tile_hit] = IMG_LoadTexture(renderer, "res/tile_hit.png");

@@ -14,6 +14,8 @@ enum class ResID
 	Font_72,
 	Font_128,
 
+	Tex_Ship,
+
 	Tex_Tile_hit,
 	Tex_Tile_miss,
 	Tex_Tile_unknow,
