@@ -110,3 +110,8 @@ bool Ship::check_cursor_hit(int x, int y)const
 	return x >= ship_rect.x && x < (ship_rect.x + ship_rect.w) &&
 		y >= ship_rect.y && y < (ship_rect.y + ship_rect.h);
 }
+
+bool Ship::is_select()const
+{
+	return selected;
+}

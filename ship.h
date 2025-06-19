@@ -50,6 +50,7 @@ public:
 	const SDL_Point& get_position()const;
 	const SDL_Point& get_index()const;
 
+	bool is_select()const;
 	bool finish_moveing()const;
 	bool check_cursor_hit(int x, int y)const;
 
@@ -67,8 +68,9 @@ private:
 	int hp = 0;
 	int ship_size = 0;
 	int missile = 1;
+
 	bool sink=false;
 	bool horizontal = true;
 	bool have_skill = false;
-	bool ship_in_move = false;
+	bool selected = false;
 };
