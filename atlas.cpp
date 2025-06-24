@@ -34,5 +34,6 @@ SDL_Texture* Atlas::get_texture(size_t num)const
 {
     if (texture_list.empty())
         return nullptr;
+
     return texture_list[num % texture_list.size()];
 }

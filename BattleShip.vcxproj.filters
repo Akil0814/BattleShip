@@ -100,9 +100,6 @@
     <ClCompile Include="effect.cpp">
       <Filter>effect</Filter>
     </ClCompile>
-    <ClCompile Include="classic_ship.cpp">
-      <Filter>ship</Filter>
-    </ClCompile>
     <ClCompile Include="ship.cpp">
       <Filter>ship</Filter>
     </ClCompile>
@@ -173,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="effect.h">
       <Filter>effect</Filter>
-    </ClInclude>
-    <ClInclude Include="classic_ship.h">
-      <Filter>ship</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

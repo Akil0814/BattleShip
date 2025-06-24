@@ -69,38 +69,23 @@ void Animation::on_render(SDL_Renderer* renderer, SDL_Rect& rect, double angle =
 
 void Animation::on_render(SDL_Renderer* renderer, const SDL_Point& pos_dst, double angle) const
 {
-    // 取当前帧纹理
     SDL_Texture* tex = texture_list->get_texture(idx_frame);
-    if (!tex) {
+    if (!tex) 
         return;
-    }
 
-    // 查询宽高
     int w, h;
-    if (SDL_QueryTexture(tex, nullptr, nullptr, &w, &h) != 0) {
+    if (SDL_QueryTexture(tex, nullptr, nullptr, &w, &h) != 0)
         return;
-    }
 
-    // 局部目标矩形
     SDL_Rect dst;
     dst.x = pos_dst.x;
     dst.y = pos_dst.y;
     dst.w = w;
     dst.h = h;
 
-    // 旋转中心：矩形中心
     SDL_Point center{ w / 2, h / 2 };
 
-    // 真正用 angle，绕中心点，不翻转
-    SDL_RenderCopyEx(
-        renderer,
-        tex,
-        nullptr,
-        &dst,
-        angle,
-        &center,
-        SDL_FLIP_NONE
-    );
+	SDL_RenderCopyEx(renderer, tex, nullptr, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
 void Animation::pause()
@@ -113,11 +98,7 @@ void Animation::resume()
     timer.resume();
 }
 
-bool Animation::is_finished() const {
-    return is_finish;
-}
-
-std::function<void()> Animation::get_call_back()const
+bool Animation::is_finished() const
 {
-    return on_finished;
+    return is_finish;
 }

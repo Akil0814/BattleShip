@@ -73,4 +73,5 @@ private:
 	bool horizontal = true;
 	bool have_skill = false;
 	bool selected = false;
+	bool ship_in_move = false;
 };
