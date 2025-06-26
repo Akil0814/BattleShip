@@ -6,9 +6,10 @@ SDL_Texture* Board::tile_unknown = nullptr;
 
 Board::Board()
 {
-	test_ship.init_ship(ResourcesManager::instance()->get_texture(ResID::Tex_Ship), 5, {50,50});/////////////////////////////////////
 
 	set_target = ResourcesManager::instance()->get_texture(ResID::Tex_SetTarget);
+
+	hand = ResourcesManager::instance()->get_texture(ResID::Tex_Hand);
 
 	tile_hit = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_hit);
 	tile_miss = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_miss);
@@ -44,9 +45,6 @@ Board::~Board()
 void Board::on_render(SDL_Renderer* renderer)
 {
 	draw_board(renderer);
-
-	test_ship.on_render(renderer);////////////////////////////////////////////////////////
-
 
 	for (int i = 0; i < row; i++)
 	{
@@ -110,8 +108,6 @@ void Board::on_update(double delta)
 
 void Board::on_input(const SDL_Event& event)
 {
-	test_ship.on_input(event);
-
 	on_mouse_move(event);
 
 	if (on_animation)
@@ -218,19 +214,24 @@ void  Board::draw_board(SDL_Renderer* renderer)
 	}
 }
 
-
-
 void Board::on_render_for_setup(SDL_Renderer* renderer)
 {
 	draw_board(renderer);
+
+	if (move_in_board)
+	{
+		SDL_Rect target_rect = { mouse_pos.x - 15,mouse_pos.y - 15,30,30 };
+
+		SDL_RenderCopy(renderer, hand, nullptr, &target_rect);
+	}
 }
 
 void Board::on_update_for_setup(double delta)
 {
-
+	on_update(delta);
 }
 
 void Board::on_input_for_setup(const SDL_Event& event)
 {
-
+	on_input(event);
 }

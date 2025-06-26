@@ -5,7 +5,8 @@
 #include "scene_manager.h"
 #include"atlas_manager.h"
 #include"scene_pool.h"
-#include"scene_type.h" 
+#include"scene_type.h"
+#include"player.h"
 
 #include<SDL.h>
 #include <SDL_ttf.h>//×ÖÌå¿â
@@ -26,6 +27,9 @@ public:
 	SDL_Renderer* get_renderer()const;
 
 	void switch_scene(SceneType type);
+
+	Player* get_player1();
+	Player* get_player2();
 
 protected:
 	GameManager();
@@ -62,6 +66,9 @@ private:
 
 	Scene* menu_scene = nullptr;
 	Scene* setting_scene = nullptr;
+
+	Player* player1 = nullptr;
+	Player* player2 = nullptr;
 
 };
 

@@ -3,6 +3,7 @@
 #include"button.h"
 #include"scene_type.h"
 #include"game_manager.h"
+#include"player.h"
 
 #include"board.h"
 
@@ -16,9 +17,15 @@ public:
 	void on_exit();
 
 	void on_update(double delta);
-	void on_render();
+	void on_render(SDL_Renderer* renderer);
 	void on_input(const SDL_Event& event);
 
 private:
+	void next_player();
+
+private:
 	Board board;
+	Player* p1 = nullptr;
+	Player* p2 = nullptr;
+	Player* current_player = nullptr;
 };

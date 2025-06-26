@@ -21,7 +21,7 @@ void SettingScene::on_update(double delta)
 {
 
 }
-void SettingScene::on_render()
+void SettingScene::on_render(SDL_Renderer* renderer)
 {
 
 }

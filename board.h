@@ -42,9 +42,6 @@ private:
 	bool is_inside(int x, int y) const;
 
 private:
-
-	Ship test_ship;
-
 	bool on_animation = false;
 
 	bool move_in_board = false;
@@ -69,6 +66,7 @@ private:
 	TileBoard board;
 
 	SDL_Texture* set_target=nullptr;
+	SDL_Texture* hand = nullptr;
 
 	SDL_Point mouse_pos = {0};
 	SDL_Point mouse_click_pos = { 0 };

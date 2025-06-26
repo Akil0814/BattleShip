@@ -25,6 +25,8 @@ enum class ResID
 	Tex_Missile_0003,
 
 	Tex_SetTarget,
+	Tex_Hand,
+
 
 	Tex_GetTarget_0001,
 	Tex_GetTarget_0002,
@@ -72,6 +74,8 @@ enum class ResID
 	Tex_MissTarget0008,
 	Tex_MissTarget0009,
 	Tex_MissTarget0010,
+
+	Sound_Fire01,
 
 };
 

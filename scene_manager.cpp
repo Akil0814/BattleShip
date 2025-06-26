@@ -21,9 +21,9 @@ void SceneManager::on_update(double delta)
 	current_scene->on_update(delta);
 }
 
-void SceneManager::on_render()
+void SceneManager::on_render(SDL_Renderer* renderer)
 {
-	current_scene->on_render();
+	current_scene->on_render(renderer);
 }
 
 void SceneManager::on_input(const SDL_Event& event)

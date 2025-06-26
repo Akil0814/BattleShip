@@ -30,10 +30,10 @@ void MenuScene::on_exit()
 void MenuScene::on_update(double delta)
 {
 }
-void MenuScene::on_render()
+void MenuScene::on_render(SDL_Renderer* renderer)
 {
 	classic.on_render();
-	SDL_SetRenderDrawColor(GameManager::instance()->get_renderer(), back_ground_color.r, back_ground_color.g, back_ground_color.b, back_ground_color.a);
+	SDL_SetRenderDrawColor(renderer,back_ground_color.r, back_ground_color.g, back_ground_color.b, back_ground_color.a);
 }
 void MenuScene::on_input(const SDL_Event& event)
 {

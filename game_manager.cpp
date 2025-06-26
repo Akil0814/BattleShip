@@ -19,6 +19,8 @@ GameManager::GameManager()
 	init_assert(AtlasManager::instance()->load_atlas(), u8"加载游戏图集资源失败！");
 	init_assert(EffectManager::instance()->init_all_effect(), u8"加载游戏特效资源失败！");
 
+	player1 = new Player;
+	player2 = new Player;
 }
 
 GameManager::~GameManager()
@@ -76,7 +78,7 @@ void GameManager::on_update(double delta)
 
 void GameManager::on_render()
 {
-	SceneManager::instance()->on_render();
+	SceneManager::instance()->on_render(renderer);
 }
 
 SDL_Window* GameManager::get_window()const
@@ -92,4 +94,14 @@ SDL_Renderer* GameManager::get_renderer()const
 void GameManager::switch_scene(SceneType type)
 {
 	SceneManager::instance()->switch_to(ScenePool::instance()->get_scene(type));
+}
+
+Player* GameManager::get_player1()
+{
+	return player1;
+}
+
+Player* GameManager::get_player2()
+{
+	return player2;
 }

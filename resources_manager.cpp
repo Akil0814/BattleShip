@@ -12,6 +12,9 @@ bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 		if (!pair.second) return false;
 
 	texture_pool[ResID::Tex_SetTarget] = IMG_LoadTexture(renderer, "res/set_target.png");
+	texture_pool[ResID::Tex_Hand] = IMG_LoadTexture(renderer, "res/hand.png");
+
+
 	texture_pool[ResID::Tex_Ship] = IMG_LoadTexture(renderer, "res/ship/Ship5.png");
 
 
@@ -72,6 +75,17 @@ bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 
 
 	for (const auto& pair : texture_pool)
+		if (!pair.second) return false;
+
+
+	sound_pool[ResID::Sound_Fire01] = Mix_LoadWAV("res/sound/fire_1.wav");
+
+	for (const auto& pair : sound_pool)
+		if (!pair.second) return false;
+
+
+	
+	for (const auto& pair : music_pool)
 		if (!pair.second) return false;
 
 	return true;
