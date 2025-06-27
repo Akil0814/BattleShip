@@ -24,7 +24,8 @@ private:
 	void next_player();
 
 private:
-	Board board;
+	Button next_button;
+
 	Player* p1 = nullptr;
 	Player* p2 = nullptr;
 	Player* current_player = nullptr;

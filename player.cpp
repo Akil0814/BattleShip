@@ -2,9 +2,10 @@
 
 Player::Player()
 {
-	Ship*  ship=new Ship;
+	Ship* ship = new Ship;
 	ship->init_ship(ResourcesManager::instance()->get_texture(ResID::Tex_Ship), 5, { 50,50 });
 	ship_list.push_back(ship);
+	board.set_board_pos({30, 30});
 }
 
 Player::~Player()
