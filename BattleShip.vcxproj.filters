@@ -171,5 +171,8 @@
     <ClInclude Include="effect.h">
       <Filter>effect</Filter>
     </ClInclude>
+    <ClInclude Include="classic_PVE_scene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
