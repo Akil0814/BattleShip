@@ -103,6 +103,9 @@
     <ClCompile Include="ship.cpp">
       <Filter>ship</Filter>
     </ClCompile>
+    <ClCompile Include="classic_PVE_scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">

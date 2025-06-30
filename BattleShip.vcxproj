@@ -144,6 +144,7 @@ copy /Y "%DLL_SRC_DIR%\SDL2_ttf\lib\x64\SDL2_ttf.dll" "$(OutDir)"
     <ClCompile Include="board.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="classic_PVE_scene.cpp" />
     <ClCompile Include="classic_setup_scene.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effect_manager.cpp" />
