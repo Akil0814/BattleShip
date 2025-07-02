@@ -69,7 +69,6 @@ void Board::on_render(SDL_Renderer* renderer)
 		}
 	}
 
-	EffectManager::instance()->on_render(renderer);
 
 	if (find_target)
 		missile->on_render(renderer);
@@ -85,7 +84,6 @@ void Board::on_render(SDL_Renderer* renderer)
 
 void Board::on_update(double delta)
 {
-	EffectManager::instance()->on_update(delta);
 	if (find_target)
 	{
 		missile->on_update(delta);
@@ -228,7 +226,6 @@ void Board::on_render_for_setup(SDL_Renderer* renderer)
 
 void Board::on_update_for_setup(double delta)
 {
-	on_update(delta);
 }
 
 void Board::on_input_for_setup(const SDL_Event& event)
