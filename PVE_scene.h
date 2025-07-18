@@ -1,13 +1,14 @@
 #pragma once
 #include"scene.h"
+#include"player.h"
 #include"game_manager.h"
 
-class ClassicPVEScene:public Scene
+class PVEScene:public Scene
 {
 
 public:
-	ClassicPVEScene();
-	~ClassicPVEScene();
+	PVEScene();
+	~PVEScene();
 
 	void on_enter();
 	void on_exit();

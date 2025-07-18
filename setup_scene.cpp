@@ -1,8 +1,11 @@
 #include"setup_scene.h"
 SetupScene::SetupScene()
-	:next_button({800,500,100,50}, { 800,500,100,50 },
-	TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(), ResourcesManager::instance()->get_font(ResID::Font_72), "NEXT"),
-	nullptr, nullptr)
+	:next_button({800,500,100,50}, { 815,505,70,40 },
+	TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(), ResourcesManager::instance()->get_font(ResID::Font_48), "NEXT"),
+	nullptr, nullptr),
+	start_button({ 800,500,100,50 }, { 815,505,70,40 },
+		TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(), ResourcesManager::instance()->get_font(ResID::Font_48), "START"),
+		nullptr, nullptr)
 {
 }
 
@@ -18,13 +21,20 @@ void SetupScene::on_enter()
 	p1 = GameManager::instance()->get_player1();
 	p2 = GameManager::instance()->get_player2();
 	current_player = p1;
+
 	next_button.set_on_click([&] {
-		if (current_player == p1)
 			next_player();
-		else
-			GameManager::instance()->switch_scene(SceneType::PVE);
+		});
+
+	start_button.set_on_click([&]
+		{
+			if(auto* pt=dynamic_cast<HumanPlayer*>(p2))
+				GameManager::instance()->switch_scene(SceneType::PVP);
+			else
+				GameManager::instance()->switch_scene(SceneType::PVE);
 		});
 }
+
 void SetupScene::on_exit()
 {
 
@@ -32,18 +42,34 @@ void SetupScene::on_exit()
 
 void SetupScene::on_update(double delta)
 {
-	current_player->on_update_for_setup(delta);
+	current_player->on_update(delta);
 }
 void SetupScene::on_render(SDL_Renderer* renderer)
 {
-	next_button.on_render(renderer);
-	current_player->on_render_for_setup(renderer);
+	start_button.on_render(renderer);
+	if (auto* pt = dynamic_cast<HumanPlayer*>(p2))
+	{
+		if (current_player == p1)
+			next_button.on_render(renderer);
+	}
+
+	current_player->on_render(renderer);
 
 }
 void SetupScene::on_input(const SDL_Event& event)
 {
-	next_button.on_input(event);
-	current_player->on_input_for_setup(event);
+	if (auto* pt = dynamic_cast<HumanPlayer*>(p2))
+	{
+		if (current_player == p1)
+			next_button.on_input(event);
+		else
+			start_button.on_input(event);
+	}
+	
+	if (auto* pt = dynamic_cast<ComputerPlayer*>(p2))
+		start_button.on_input(event);
+
+	current_player->on_input(event);
 }
 
 void SetupScene::next_player()

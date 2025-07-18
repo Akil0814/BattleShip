@@ -7,6 +7,8 @@
 #include"scene_pool.h"
 #include"scene_type.h"
 #include"player.h"
+#include"human_player.h"
+#include"computer_player.h"
 
 #include<SDL.h>
 #include <SDL_ttf.h>//×ÖÌå¿â
@@ -27,7 +29,7 @@ public:
 
 	bool check_PVE()const;
 	void set_PVE(bool is_pve);
-
+	void set_player(bool is_pve);
 
 	SDL_Renderer* get_renderer()const;
 	SDL_Window* get_window()const;

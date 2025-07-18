@@ -19,8 +19,7 @@ GameManager::GameManager()
 	init_assert(AtlasManager::instance()->load_atlas(), u8"加载游戏图集资源失败！");
 	init_assert(EffectManager::instance()->init_all_effect(), u8"加载游戏特效资源失败！");
 
-	player1 = new Player;
-	player2 = new Player;
+	player1 = new HumanPlayer;
 }
 
 GameManager::~GameManager()
@@ -94,6 +93,14 @@ SDL_Renderer* GameManager::get_renderer()const
 void GameManager::switch_scene(SceneType type)
 {
 	SceneManager::instance()->switch_to(ScenePool::instance()->get_scene(type));
+}
+
+void GameManager::set_player(bool is_pve)
+{
+	if(is_pve)
+		player2 = new ComputerPlayer;
+	else
+		player2 = new HumanPlayer;
 }
 
 Player* GameManager::get_player1()

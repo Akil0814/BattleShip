@@ -1,15 +1,15 @@
-#include"PVE_scene.h"
+#include"PVP_scene.h"
 
-PVEScene::PVEScene()
+PVPScene::PVPScene()
 {
 
 }
-PVEScene::~PVEScene()
+PVPScene::~PVPScene()
 {
 
 }
 
-void PVEScene::on_enter()
+void PVPScene::on_enter()
 {
 	WINDOW_WIDTH = 1280;
 	WINDOW_HEIGHT = 560;
@@ -18,20 +18,20 @@ void PVEScene::on_enter()
 	p2 = GameManager::instance()->get_player2();
 	current_player = p1;
 }
-void PVEScene::on_exit()
+void PVPScene::on_exit()
 {
 
 }
 
-void PVEScene::on_update(double delta)
+void PVPScene::on_update(double delta)
 {
 
 }
-void PVEScene::on_render(SDL_Renderer* renderer)
+void PVPScene::on_render(SDL_Renderer* renderer)
 {
 
 }
-void PVEScene::on_input(const SDL_Event& event)
+void PVPScene::on_input(const SDL_Event& event)
 {
 
 }

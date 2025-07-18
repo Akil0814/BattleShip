@@ -20,13 +20,13 @@ Scene* ScenePool::get_scene(SceneType type)
 
 	case SceneType::PVE:
 		if (cheek_invalid(PVE_scene))
-			//classicPVE_scene = new MenuScene;
+			PVE_scene = new PVEScene;
 		return PVE_scene;
 		break;
 
 	case SceneType::PVP:
 		if (cheek_invalid(PVP_scene))
-			//menu_scene = new MenuScene;
+			PVP_scene = new PVPScene;
 		return PVP_scene;
 		break;
 
@@ -35,7 +35,6 @@ Scene* ScenePool::get_scene(SceneType type)
 			setup_scene = new SetupScene;
 		return setup_scene;
 		break;
-
 
 	default:
 		return nullptr;

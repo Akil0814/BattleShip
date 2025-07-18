@@ -15,7 +15,11 @@ bool ResourcesManager::load_from_file(SDL_Renderer* renderer)
 	texture_pool[ResID::Tex_Hand] = IMG_LoadTexture(renderer, "res/hand.png");
 
 
-	texture_pool[ResID::Tex_Ship] = IMG_LoadTexture(renderer, "res/ship/Ship5.png");
+	texture_pool[ResID::Tex_Ship_1] = IMG_LoadTexture(renderer, "res/ship/Ship1.png");
+	texture_pool[ResID::Tex_Ship_2] = IMG_LoadTexture(renderer, "res/ship/Ship2.png");
+	texture_pool[ResID::Tex_Ship_3] = IMG_LoadTexture(renderer, "res/ship/Ship3.png");
+	texture_pool[ResID::Tex_Ship_4] = IMG_LoadTexture(renderer, "res/ship/Ship4.png");
+	texture_pool[ResID::Tex_Ship_5] = IMG_LoadTexture(renderer, "res/ship/Ship5.png");
 
 
 	texture_pool[ResID::Tex_Tile_hit] = IMG_LoadTexture(renderer, "res/tile_hit.png");

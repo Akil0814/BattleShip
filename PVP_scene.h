@@ -1,19 +1,15 @@
 #pragma once
 #include"scene.h"
-#include"button.h"
-#include"scene_type.h"
+#include"player.h"
 #include"game_manager.h"
 
-#include"player.h"
-#include"human_player.h"
-#include"computer_player.h"
-
-class SetupScene :public Scene
+class PVPScene :public Scene
 {
+
 public:
-	SetupScene();
-	~SetupScene();
-	
+	PVPScene();
+	~PVPScene();
+
 	void on_enter();
 	void on_exit();
 
@@ -22,14 +18,8 @@ public:
 	void on_input(const SDL_Event& event);
 
 private:
-	void next_player();
-
-private:
-	Button next_button;
-	Button start_button;
-
-
 	Player* p1 = nullptr;
 	Player* p2 = nullptr;
 	Player* current_player = nullptr;
+
 };

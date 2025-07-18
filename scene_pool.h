@@ -1,8 +1,11 @@
 #pragma once
 #include"scene.h"
 #include"scene_type.h"
+
 #include "menu_scene.h"
 #include"setup_scene.h"
+#include"PVE_scene.h"
+#include"PVP_scene.h"
 
 class ScenePool
 {
