@@ -14,14 +14,15 @@ public:
 	void on_render(SDL_Renderer* renderer);
 	void on_input(const SDL_Event& event);
 
-	void set_position(const SDL_Point&);
+	void set_position(const SDL_Point& pos);
+	void pos_is_valid();
 
 	void rotate_ship();
 
 	int get_ship_size()const;
 	bool is_horizontal()const;
-	bool is_sink()const;
 	const SDL_Point& get_position()const;
+	bool check_motion()const;
 
 	bool check_cursor_hit(int x, int y)const;
 	void update_rect();
@@ -30,11 +31,11 @@ private:
 
 	SDL_Texture* ship_texture = nullptr;
 
-	SDL_Point absolute_position;
-
+	SDL_Point absolute_position = {0};
+	SDL_Point last_position = { 0 };
 	
-	SDL_Rect collision_rect;
-	SDL_Rect render_rect;
+	SDL_Rect collision_rect = { 0 };
+	SDL_Rect render_rect = { 0 };
 
 	int dx = 0;
 	int dy = 0;
@@ -42,8 +43,7 @@ private:
 	int hp = 0;
 	int ship_size = 0;
 
-	bool sink=false;
+	bool pos_valid = false;
 	bool horizontal = true;
-	bool selected = false;
 	bool ship_in_move = false;
 };

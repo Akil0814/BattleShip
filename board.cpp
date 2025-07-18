@@ -139,7 +139,7 @@ void Board::on_mouse_click(const SDL_Event& event)
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
 				index_x = (mouse_click_pos.x- board_render_x)/SIZE_TILE;
-				index_y = (mouse_click_pos.y- board_render_x)/SIZE_TILE;
+				index_y = (mouse_click_pos.y- board_render_y)/SIZE_TILE;
 
 				mouse_click_tile_center.x = board_render_x + index_x * SIZE_TILE + SIZE_TILE / 2;
 				mouse_click_tile_center.y = board_render_y + index_y * SIZE_TILE + SIZE_TILE / 2;
@@ -196,4 +196,45 @@ void  Board::draw_board(SDL_Renderer* renderer)
 		int y = board_render_y + j * SIZE_TILE;
 		SDL_RenderDrawLine(renderer, board_render_x, y, board_render_x + col * SIZE_TILE, y);
 	}
+}
+
+bool Board::check_available(SDL_Point pos,int ship_size,bool is_horizontal)
+{
+	SDL_Point index;
+	index.x = (pos.x- board_render_x)/50;
+	index.y = (pos.y- board_render_y)/50;
+
+	if (!board[index.x][index.y].has_ship())
+	{
+		if (is_horizontal)
+		{
+			for (int i = 1; i < ship_size; i++)
+			{
+				if (index.x + i <= col)
+				{
+					if (board[index.x + i][index.y].has_ship())
+						return false;
+				}
+				else
+					return false;
+			}
+		}
+		else
+		{
+			for (int i = 1; i < ship_size; i++)
+			{
+				if (index.y + i <= row)
+				{
+					if (board[index.x][index.y+i].has_ship())
+						return false;
+				}
+				else
+					return false;
+			}
+
+		}
+		return true;
+	}
+
+	return false;
 }

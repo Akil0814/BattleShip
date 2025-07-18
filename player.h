@@ -15,9 +15,9 @@ public:
 
 private:
 
-	double money = 0;
-	int num_of_missile = 0;
 	bool is_win = false;
+	bool have_ship_in_move = false;
+	Ship* current_ship = nullptr;
 	std::vector<Ship*> ship_list;
 	Board board;
 };

@@ -1,5 +1,7 @@
 #include"player.h"
 
+#include<iostream>//test
+
 Player::Player()
 {
 	Ship* ship = new Ship;
@@ -40,6 +42,7 @@ void Player::on_render(SDL_Renderer* renderer)
 
 	EffectManager::instance()->on_render(renderer);//局内
 }
+
 void Player::on_update(double delta)
 {
 	board.on_update(delta);//局内
@@ -49,12 +52,38 @@ void Player::on_update(double delta)
 
 	EffectManager::instance()->on_update(delta);//局内
 }
+
 void Player::on_input(const SDL_Event& event) 
 {
 	board.on_input(event);
+	if (have_ship_in_move == true)
+	{
+		std::cout << "in move" << std::endl;
+		current_ship->on_input(event);
+		if (!current_ship->check_motion())
+		{
+			have_ship_in_move = false;
+
+			if(board.check_available(current_ship->get_position()));
+			{
+				std::cout << "available" << std::endl;
+				current_ship->set_position({ event.button.x, event.button.y });
+			}
+
+			current_ship = nullptr;
+			std::cout << "stop move" << std::endl;
+		}
+	}
 
 	for (auto& ship : ship_list)
+	{
 		ship->on_input(event);
+		if (ship->check_motion())
+		{
+			have_ship_in_move = true;
+			current_ship = ship;
+		}
+	}
 
 }
 
