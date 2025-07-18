@@ -18,41 +18,24 @@ Scene* ScenePool::get_scene(SceneType type)
 		return setting_scene;
 		break;
 
-	case SceneType::ClassicPVE:
-		if (cheek_invalid(classic_PVE_scene))
+	case SceneType::PVE:
+		if (cheek_invalid(PVE_scene))
 			//classicPVE_scene = new MenuScene;
-		return classic_PVE_scene;
+		return PVE_scene;
 		break;
 
-	case SceneType::ClassicPVP:
-		if (cheek_invalid(classic_PVP_scene))
+	case SceneType::PVP:
+		if (cheek_invalid(PVP_scene))
 			//menu_scene = new MenuScene;
-		return classic_PVP_scene;
+		return PVP_scene;
 		break;
 
-	case SceneType::ClassicSetup:
-		if (cheek_invalid(classic_setup_scene))
-			classic_setup_scene = new ClassicSetupScene;
-		return classic_setup_scene;
+	case SceneType::Setup:
+		if (cheek_invalid(setup_scene))
+			setup_scene = new SetupScene;
+		return setup_scene;
 		break;
 
-	case SceneType::NewTypePVE:
-		if (cheek_invalid(new_type_PVE_scene))
-			//menu_scene = new MenuScene;
-		return  new_type_PVE_scene;
-		break;
-
-	case SceneType::NewTypePVP:
-		if (cheek_invalid(new_type_PVP_scene))
-			//menu_scene = new MenuScene;
-		return new_type_PVP_scene;
-		break;
-
-	case SceneType::NewTypeSetup:
-		if (cheek_invalid(new_type_setup_scene))
-			//menu_scene = new MenuScene;
-		return new_type_setup_scene;
-		break;
 
 	default:
 		return nullptr;
@@ -82,51 +65,27 @@ void ScenePool::delete_scene(SceneType type)
 
 		break;
 
-	case SceneType::ClassicPVE:
+	case SceneType::PVE:
 
-		if (cheek_invalid(classic_PVE_scene))
+		if (cheek_invalid(PVE_scene))
 			return;
-		delete classic_PVE_scene;
+		delete PVE_scene;
 
 		break;
 
-	case SceneType::ClassicPVP:
+	case SceneType::PVP:
 
-		if (cheek_invalid(classic_PVP_scene))
+		if (cheek_invalid(PVP_scene))
 			return;
-		delete  classic_PVP_scene;
+		delete  PVP_scene;
 
 		break;
 
-	case SceneType::ClassicSetup:
+	case SceneType::Setup:
 
-		if (cheek_invalid(classic_setup_scene))
+		if (cheek_invalid(setup_scene))
 			return;
-		delete classic_setup_scene;
-
-		break;
-
-	case SceneType::NewTypePVE:
-
-		if (cheek_invalid(new_type_PVE_scene))
-			return;
-		delete new_type_PVE_scene;
-
-		break;
-
-	case SceneType::NewTypePVP:
-
-		if (cheek_invalid(new_type_PVP_scene))
-			return;
-		delete new_type_PVP_scene;
-
-		break;
-
-	case SceneType::NewTypeSetup:
-
-		if (cheek_invalid(new_type_setup_scene))
-			return;
-		delete new_type_setup_scene;
+		delete setup_scene;
 
 		break;
 

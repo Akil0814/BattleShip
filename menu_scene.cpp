@@ -1,13 +1,13 @@
 #include"menu_scene.h"
 
 MenuScene::MenuScene()
-	:classic(GameManager::instance()->get_renderer(), { 100,50,200,70 }, { 100,50,200,70 },
-			 TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(),ResourcesManager::instance()->get_font(ResID::Font_72), "Classic PVE"),
+	:button_PVP({ 100,50,200,70 }, { 100,50,200,70 },
+			 TxtTextureManager::instance()->get_txt_texture(GameManager::instance()->get_renderer(),ResourcesManager::instance()->get_font(ResID::Font_48), "   PVP   "),
 			 nullptr, nullptr)
 {
-	classic.set_on_click([]
+	button_PVP.set_on_click([]
 		{
-			GameManager::instance()->switch_scene(SceneType::ClassicSetup);
+			GameManager::instance()->switch_scene(SceneType::Setup);
 		});
 }
 
@@ -29,13 +29,14 @@ void MenuScene::on_exit()
 
 void MenuScene::on_update(double delta)
 {
+
 }
 void MenuScene::on_render(SDL_Renderer* renderer)
 {
-	classic.on_render();
+	button_PVP.on_render(renderer);
 	SDL_SetRenderDrawColor(renderer,back_ground_color.r, back_ground_color.g, back_ground_color.b, back_ground_color.a);
 }
 void MenuScene::on_input(const SDL_Event& event)
 {
-	classic.process_event(event);
+	button_PVP.on_input(event);
 }

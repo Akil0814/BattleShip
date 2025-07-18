@@ -30,5 +30,4 @@ private:
 
 private:
 	TextTexturePool text_texture_pool;
-
 };

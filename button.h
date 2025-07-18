@@ -21,21 +21,22 @@ public:
 
 public:
 
-	Button(SDL_Renderer* renderer,SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
+	Button(SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 			Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up);
 
-	Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
+	Button(SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 			Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up,
 			SDL_Color color_idle,SDL_Color color_hovered, SDL_Color color_pushed, SDL_Color color_frame);
 
-	Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
+	Button(SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 			Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up,
 			SDL_Texture* texture_idle,SDL_Texture* texture_hovered, SDL_Texture* texture_pushed);
 
 	~Button() = default;
 
-	void on_render();
-	void process_event(const SDL_Event& event);
+	void on_render(SDL_Renderer* renderer);
+	void on_input(const SDL_Event& event);
+
 	void set_on_click(std::function<void()> func);
 	void set_status(Status status);
 
@@ -58,14 +59,11 @@ private:
 	void init_assert(T* ptr, const std::string& err_msg)const;
 
 private:
-
-	SDL_Renderer* renderer = nullptr;
-
 	SDL_Rect rect_button;
 	SDL_Rect rect_message;
 
-	Mix_Chunk* sound_effect_down = nullptr;//ÒôÐ§
-	Mix_Chunk* sound_effect_up = nullptr;//ÒôÐ§
+	Mix_Chunk* sound_effect_down = nullptr;//ï¿½ï¿½Ð§
+	Mix_Chunk* sound_effect_up = nullptr;//ï¿½ï¿½Ð§
 
 	SDL_Texture* texture_message = nullptr;
 	SDL_Texture* texture_idle = nullptr;

@@ -105,3 +105,13 @@ Player* GameManager::get_player2()
 {
 	return player2;
 }
+
+bool GameManager::check_PVE()const
+{
+	return is_PVE;
+}
+
+void GameManager::set_PVE(bool is_pve)
+{
+	is_PVE = is_pve;
+}

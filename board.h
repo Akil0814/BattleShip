@@ -29,6 +29,8 @@ public:
 
 	void set_size(int row, int col);
 	void set_board_pos(SDL_Point point);
+	bool is_inside(int x, int y) const;
+
 
 	static SDL_Texture* tile_hit;
 	static SDL_Texture* tile_miss;
@@ -39,7 +41,6 @@ private:
 	void draw_board(SDL_Renderer* renderer);
 	void on_mouse_click(const SDL_Event& e);
 	void on_mouse_move(const SDL_Event& e);
-	bool is_inside(int x, int y) const;
 
 private:
 	bool on_animation = false;
@@ -61,12 +62,7 @@ private:
 	int row = 10;
 	int col = 10;
 
-	Bullet* missile;
-
 	TileBoard board;
-
-	SDL_Texture* set_target=nullptr;
-	SDL_Texture* hand = nullptr;
 
 	SDL_Point mouse_pos = {0};
 	SDL_Point mouse_click_pos = { 0 };

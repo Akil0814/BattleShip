@@ -22,15 +22,18 @@ class GameManager :public Manager<GameManager>
 public:
 	int run(int argc, char** argv);
 
-
-
 	void switch_scene(SceneType type);
+
+
+	bool check_PVE()const;
+	void set_PVE(bool is_pve);
+
 
 	SDL_Renderer* get_renderer()const;
 	SDL_Window* get_window()const;
+
 	Player* get_player1();
 	Player* get_player2();
-	bool is_PVE()const;
 
 protected:
 	GameManager();
@@ -54,12 +57,11 @@ private:
 		exit(-1);
 	}
 
-
 private:
 
 	const int FPS = 60;
 	bool is_quit = false;
-	bool PVE = false;
+	bool is_PVE = false;
 
 	SDL_Event event;
 

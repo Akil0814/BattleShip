@@ -12,7 +12,7 @@
 class MenuScene :public Scene
 {
 private:
-	Button classic;
+	Button button_PVP;
 
 public:
 	MenuScene();

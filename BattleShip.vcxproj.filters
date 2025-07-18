@@ -61,7 +61,7 @@
     <ClCompile Include="scene_pool.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="classic_setup_scene.cpp">
+    <ClCompile Include="setup_scene.cpp">
       <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="txt_texture_manager.cpp">
@@ -78,9 +78,6 @@
     </ClCompile>
     <ClCompile Include="timer.cpp">
       <Filter>timer</Filter>
-    </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>button</Filter>
     </ClCompile>
     <ClCompile Include="board.cpp">
       <Filter>board data</Filter>
@@ -103,8 +100,11 @@
     <ClCompile Include="ship.cpp">
       <Filter>ship</Filter>
     </ClCompile>
-    <ClCompile Include="classic_PVE_scene.cpp">
+    <ClCompile Include="PVE_scene.cpp">
       <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +135,7 @@
     <ClInclude Include="scene_pool.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="classic_setup_scene.h">
+    <ClInclude Include="setup_scene.h">
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="txt_texture_manager.h">
@@ -152,9 +152,6 @@
     </ClInclude>
     <ClInclude Include="timer.h">
       <Filter>timer</Filter>
-    </ClInclude>
-    <ClInclude Include="button.h">
-      <Filter>button</Filter>
     </ClInclude>
     <ClInclude Include="board.h">
       <Filter>board data</Filter>
@@ -174,8 +171,11 @@
     <ClInclude Include="effect.h">
       <Filter>effect</Filter>
     </ClInclude>
-    <ClInclude Include="classic_PVE_scene.h">
+    <ClInclude Include="PVE_scene.h">
       <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

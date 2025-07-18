@@ -7,11 +7,11 @@
 
 #include"board.h"
 
-class ClassicSetupScene :public Scene
+class SetupScene :public Scene
 {
 public:
-	ClassicSetupScene();
-	~ClassicSetupScene();
+	SetupScene();
+	~SetupScene();
 
 	void on_enter();
 	void on_exit();

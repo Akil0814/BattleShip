@@ -1,11 +1,8 @@
 #include "button.h"
 
-Button::Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
+Button::Button(SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 	Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up)
 {
-
-	init_assert<SDL_Renderer>(renderer, "Butten Renderer Error");
-	this->renderer = renderer;
 	this->rect_button = rect_button;
 
 	if (texture_message != nullptr)
@@ -30,10 +27,10 @@ Button::Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_messa
 
 }
 
-Button::Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
+Button::Button(SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 	Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up,
 	SDL_Color color_idle, SDL_Color color_hovered, SDL_Color color_pushed, SDL_Color color_frame)
-	:Button(renderer, rect_button, rect_message, texture_message, sound_effect_down, sound_effect_up)
+	:Button(rect_button, rect_message, texture_message, sound_effect_down, sound_effect_up)
 {
 	this->color_idle = color_idle;
 	this->color_hovered = color_hovered;
@@ -41,10 +38,10 @@ Button::Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_messa
 	this->color_frame = color_frame;
 }
 
-Button::Button(SDL_Renderer* renderer, SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
+Button::Button(SDL_Rect rect_button, SDL_Rect rect_message, SDL_Texture* texture_message,
 	Mix_Chunk* sound_effect_down, Mix_Chunk* sound_effect_up,
 	SDL_Texture* texture_idle, SDL_Texture* texture_hovered, SDL_Texture* texture_pushed)
-	:Button(renderer, rect_button, rect_message, texture_message, sound_effect_down, sound_effect_up)
+	:Button(rect_button, rect_message, texture_message, sound_effect_down, sound_effect_up)
 {
 	init_assert<SDL_Texture>(texture_idle, "Butten Texture_idle Error");
 	init_assert<SDL_Texture>(texture_hovered, "Butten Texture_hovered Error");
@@ -66,7 +63,7 @@ void Button::init_assert(T* ptr, const std::string& err_msg)const
 	}
 }
 
-void Button::on_render()
+void Button::on_render(SDL_Renderer* renderer)
 {
 	if (!have_texture)
 	{
@@ -109,7 +106,7 @@ void Button::on_render()
 
 }
 
-void Button::process_event(const SDL_Event& event)
+void Button::on_input(const SDL_Event& event)
 {
 	if (on_hold)
 		return;

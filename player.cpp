@@ -16,7 +16,7 @@ Player::~Player()
 
 void Player::on_render_for_setup(SDL_Renderer* renderer)
 {
-	board.on_render_for_setup(renderer);
+	board.on_render(renderer);
 
 	for (auto& ship : ship_list)
 		ship->on_render(renderer);
@@ -28,14 +28,14 @@ void Player::on_update_for_setup(double delta)
 {
 	EffectManager::instance()->on_update(delta);
 
-	board.on_update_for_setup(delta);
+	board.on_update(delta);
 
 	for (auto& ship : ship_list)
 		ship->on_update(delta);
 }
 void Player::on_input_for_setup(const SDL_Event& event)
 {
-	board.on_input_for_setup(event);
+	board.on_input(event);
 
 	for (auto& ship : ship_list)
 		ship->on_input(event);
