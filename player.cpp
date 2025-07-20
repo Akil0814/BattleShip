@@ -1,6 +1,10 @@
 #include"player.h"
 
 #include<iostream>//test
+/*
+ 1.旋转可用性检测bug
+ 2.在移动时对船只进行旋转的状态退回异常->限制一次输入中只能进行一种行为
+*/
 
 Player::Player()
 {
@@ -64,8 +68,7 @@ void Player::on_input(const SDL_Event& event)
 		{
 			have_ship_in_move = false;
 
-			SDL_Point s = {};
-			SDL_Point p = board.place_ship({ event.motion.x, event.motion.y }, current_ship->get_ship_size(), current_ship->is_horizontal());
+			SDL_Point p = board.place_ship(current_ship->get_position(), current_ship->get_ship_size(), current_ship->is_horizontal());
 			if (p.x != -1)
 			{
 				current_ship->set_position(p);
@@ -79,6 +82,7 @@ void Player::on_input(const SDL_Event& event)
 			current_ship = nullptr;
 			std::cout << "stop move" << std::endl;
 		}
+
 	}
 	else 
 	{
@@ -92,6 +96,28 @@ void Player::on_input(const SDL_Event& event)
 				current_ship = ship;
 				current_ship_last_pos = current_ship->get_position();
 				board.move_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
+
+			}
+			if (ship->check_rotate())
+			{
+				current_ship = ship;
+				current_ship_last_pos = current_ship->get_position();
+				board.move_ship(current_ship_last_pos, current_ship->get_ship_size(), !current_ship->is_horizontal());
+
+				SDL_Point p = board.place_ship(current_ship->get_position(), current_ship->get_ship_size(), current_ship->is_horizontal());
+				if (p.x != -1)
+				{
+					current_ship->set_position(p);
+					std::cout << "R put" << std::endl;
+				}
+				else
+				{
+					current_ship->rotate_ship();
+					current_ship->set_position(current_ship_last_pos);
+					board.place_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
+				}
+
+				std::cout << "rotated YYY" << std::endl;
 			}
 		}
 	}

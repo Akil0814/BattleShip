@@ -22,6 +22,7 @@ public:
 	bool is_horizontal()const;
 	const SDL_Point& get_position()const;
 	bool check_motion()const;
+	bool check_rotate()const;
 
 	bool check_cursor_hit(int x, int y)const;
 	void update_rect();
@@ -43,4 +44,6 @@ private:
 
 	bool horizontal = true;
 	bool ship_in_move = false;
+	bool ship_rotate = false;
+
 };

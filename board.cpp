@@ -1,13 +1,5 @@
 #include "board.h"
 
-/*
-    1.检测放置位置不可用退回操作时没有退回棋盘格状态
-    2.旋转后棋盘数据未清空
-    3.是否能旋转的检测
-    4.放置位置的校对时没有计算鼠标位置与船只的相对位置差导致船只会被放置在鼠标附近
-*/
-
-
 SDL_Texture* Board::tile_hit = nullptr;
 SDL_Texture* Board::tile_miss = nullptr;
 
@@ -208,6 +200,12 @@ SDL_Point Board::place_ship(SDL_Point pos, int ship_size, bool is_horizontal)
     int x = (pos.x - board_render_x) / SIZE_TILE;
     int y = (pos.y - board_render_y) / SIZE_TILE;
 
+    if ((pos.x-board_render_x) % SIZE_TILE > SIZE_TILE / 2)
+        x++;
+
+    if ((pos.y-board_render_y) % SIZE_TILE > SIZE_TILE / 2)
+        y++;
+
     if (check_available(x,y, ship_size, is_horizontal))
     {
         if (is_horizontal)
@@ -256,8 +254,6 @@ void Board::move_ship(SDL_Point pos, int ship_size, bool is_horizontal)
         show_board();
 }
 
-
-
 bool Board::check_available(int x,int y, int ship_size, bool is_horizontal)
 {
 
@@ -290,8 +286,6 @@ bool Board::check_available(int x,int y, int ship_size, bool is_horizontal)
     }
     return true;
 }
-
-
 
 void Board::show_board()
 {
