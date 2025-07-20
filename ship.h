@@ -15,7 +15,6 @@ public:
 	void on_input(const SDL_Event& event);
 
 	void set_position(const SDL_Point& pos);
-	void pos_is_valid();
 
 	void rotate_ship();
 
@@ -32,7 +31,6 @@ private:
 	SDL_Texture* ship_texture = nullptr;
 
 	SDL_Point absolute_position = {0};
-	SDL_Point last_position = { 0 };
 	
 	SDL_Rect collision_rect = { 0 };
 	SDL_Rect render_rect = { 0 };
@@ -43,7 +41,6 @@ private:
 	int hp = 0;
 	int ship_size = 0;
 
-	bool pos_valid = false;
 	bool horizontal = true;
 	bool ship_in_move = false;
 };

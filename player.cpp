@@ -56,34 +56,43 @@ void Player::on_update(double delta)
 void Player::on_input(const SDL_Event& event) 
 {
 	board.on_input(event);
+
 	if (have_ship_in_move == true)
 	{
-		std::cout << "in move" << std::endl;
 		current_ship->on_input(event);
 		if (!current_ship->check_motion())
 		{
 			have_ship_in_move = false;
 
-			if(board.check_available(current_ship->get_position()));
+			SDL_Point s = {};
+			SDL_Point p = board.place_ship({ event.motion.x, event.motion.y }, current_ship->get_ship_size(), current_ship->is_horizontal());
+			if (p.x != -1)
 			{
-				std::cout << "available" << std::endl;
-				current_ship->set_position({ event.button.x, event.button.y });
+				current_ship->set_position(p);
+				std::cout << "put" << std::endl;
 			}
-
+			else
+			{
+				current_ship->set_position(current_ship_last_pos);
+				board.place_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
+			}
 			current_ship = nullptr;
 			std::cout << "stop move" << std::endl;
 		}
 	}
-
-	for (auto& ship : ship_list)
+	else 
 	{
-		ship->on_input(event);
-		if (ship->check_motion())
+		for (auto& ship : ship_list)
 		{
-			have_ship_in_move = true;
-			current_ship = ship;
+			ship->on_input(event);
+			if (ship->check_motion())
+			{
+				std::cout << "start move" << std::endl;
+				have_ship_in_move = true;
+				current_ship = ship;
+				current_ship_last_pos = current_ship->get_position();
+				board.move_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
+			}
 		}
 	}
-
 }
-

@@ -25,9 +25,12 @@ private:
 	void next_player();
 
 private:
+
 	Button next_button;
 	Button start_button;
 
+	bool move_current_ship = false;
+	bool rotate_current_ship = false;
 
 	Player* p1 = nullptr;
 	Player* p2 = nullptr;

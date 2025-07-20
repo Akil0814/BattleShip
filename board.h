@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include <SDL.h>
+#include<iostream>
 
 #include"ship.h"
 
@@ -18,7 +19,6 @@ public:
 	Board();
 	~Board();
 
-
 	void on_render(SDL_Renderer* renderer);
 	void on_update(double delta);
 	void on_input(const SDL_Event& event);
@@ -26,12 +26,17 @@ public:
 
 	void set_size(int row, int col);
 	void set_board_pos(SDL_Point point);
+
+	SDL_Point place_ship(SDL_Point pos, int ship_size, bool is_horizontal);
+	void move_ship(SDL_Point pos, int ship_size, bool is_horizontal);
+
 	bool is_inside(int x, int y) const;
-	bool check_available(SDL_Point pos, int ship_size, bool is_horizontal);
+	bool check_available(int x,int y, int ship_size, bool is_horizontal);
 
 	static SDL_Texture* tile_hit;
 	static SDL_Texture* tile_miss;
-	static SDL_Texture* tile_unknown;
+
+	void show_board();////////////////////////////////
 
 private:
 
@@ -45,10 +50,7 @@ private:
 	bool move_in_board = false;
 	bool click_in_board = false;
 
-	bool try_hit = false;
-
 	bool find_target = false;
-	bool hit_settlement = false;
 
 	int board_render_x = 0;
 	int board_render_y = 0;
@@ -62,10 +64,8 @@ private:
 	TileBoard board;
 
 	SDL_Point mouse_pos = {0};
-	SDL_Point mouse_click_pos = { 0 };
 	SDL_Point mouse_click_tile_center = {0};
 
-	SDL_Rect current_rect;
 	SDL_Rect rect_select_target;
 	SDL_Rect rect_water_splash;
 	SDL_Rect rect_explosion_target;

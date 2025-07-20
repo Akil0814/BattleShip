@@ -2,8 +2,6 @@
 #include<iostream>
 
 
-//增加防止一次选中多个船只
-
 
 void Ship::on_update(double delta)
 {
@@ -33,7 +31,10 @@ void Ship::on_input(const SDL_Event& event)
 		}
 
 		if (event.button.button == SDL_BUTTON_RIGHT)
+		{
+			ship_in_move = true;
 			rotate_ship();
+		}
 	}
 
 	if (event.type == SDL_MOUSEBUTTONUP)
@@ -41,16 +42,16 @@ void Ship::on_input(const SDL_Event& event)
 		ship_in_move = false;
 		dx = 0;
 		dy = 0;
-		if (pos_valid)
-		{
+		//if (pos_valid)
+		//{
 			set_position(absolute_position);
-			last_position = absolute_position;
-			pos_valid = false;
-		}
-		else
-		{
-			set_position(last_position);
-		}
+			//last_position = absolute_position;
+			//pos_valid = false;
+		//}
+		//else
+		//{
+			//set_position(last_position);
+		//}
 	}
 
 	if (ship_in_move && event.type == SDL_MOUSEMOTION)
@@ -65,7 +66,7 @@ void Ship::init_ship(SDL_Texture* texture,int size,SDL_Point first_pos)
 	ship_size = size;
 	render_rect.h = 50, render_rect.w = 50 * size;
 	set_position(first_pos);
-	last_position = first_pos;
+	//last_position = first_pos;
 }
 
 void Ship::rotate_ship()
@@ -125,7 +126,7 @@ bool Ship::check_motion()const
 	return ship_in_move;
 }
 
-void Ship::pos_is_valid()
-{
-	pos_valid = true;
-}
+//void Ship::pos_is_valid()
+//{
+//	pos_valid = true;
+//}

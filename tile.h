@@ -4,7 +4,7 @@
 
 class Tile {
 public:
-    enum class Status { Unknown, Miss, Hit, SomeThing };
+    enum class Status { Unknown, Miss, Hit};
 
     Tile() = default;
 
@@ -21,22 +21,25 @@ public:
     bool has_ship()const
     {
         return have_ship;
-
     }
 
-    void placeShip()
+    void place_ship()
     {
         have_ship = true;
-        status = Status::Unknown;
     }
 
-    void markMiss()
+    void move_ship()
+    {
+        have_ship = false;
+    }
+
+    void mark_miss()
     {
         if (status == Status::Unknown)
             status = Status::Miss;
     }
 
-    void markHit()
+    void mark_hit()
     {
         if (status == Status::Unknown && have_ship)
             status = Status::Hit;

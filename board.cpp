@@ -1,240 +1,310 @@
-#include"board.h"
+#include "board.h"
+
+/*
+    1.检测放置位置不可用退回操作时没有退回棋盘格状态
+    2.旋转后棋盘数据未清空
+    3.是否能旋转的检测
+    4.放置位置的校对时没有计算鼠标位置与船只的相对位置差导致船只会被放置在鼠标附近
+*/
+
 
 SDL_Texture* Board::tile_hit = nullptr;
 SDL_Texture* Board::tile_miss = nullptr;
-SDL_Texture* Board::tile_unknown = nullptr;
 
 Board::Board()
 {
-	tile_hit = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_hit);
-	tile_miss = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_miss);
-	tile_unknown = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_unknow);
+    // 初始化贴图
+    tile_hit = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_hit);
+    tile_miss = ResourcesManager::instance()->get_texture(ResID::Tex_Tile_miss);
 
-	board.assign(row, std::vector<Tile>(col));
+    // 初始化棋盘数据
+    board.assign(row, std::vector<Tile>(col));
 
-	EffectManager::instance()->set_on_finished(EffectID::SelectTarget, [this]()
-		{
-			find_target = true;
-		});
-
-	EffectManager::instance()->set_on_finished(EffectID::WaterSplash_single, [this]()
-		{
-			on_animation = false;
-			board[index_x][index_y].change_status(Tile::Status::Miss);
-		});
-
-	EffectManager::instance()->set_on_finished(EffectID::Explosion, [this]()
-		{
-			on_animation = false;
-			board[index_x][index_y].change_status(Tile::Status::Hit);
-		});
+    // 特效回调
+    EffectManager::instance()->set_on_finished(EffectID::SelectTarget, [this]() {
+        find_target = true;
+        });
+    EffectManager::instance()->set_on_finished(EffectID::WaterSplash_single, [this]() {
+        on_animation = false;
+        board[index_y][index_x].change_status(Tile::Status::Miss);
+        });
+    EffectManager::instance()->set_on_finished(EffectID::Explosion, [this]() {
+        on_animation = false;
+        board[index_y][index_x].change_status(Tile::Status::Hit);
+        });
 }
 
-Board::~Board()
-{
-
-}
+Board::~Board() = default;
 
 void Board::on_render(SDL_Renderer* renderer)
 {
-	draw_board(renderer);
+    draw_board(renderer);
 
-	for (int i = 0; i < row; i++)
-	{
-		for (int j = 0; j < col; j++)
-		{
-			SDL_Rect rect = { i * SIZE_TILE,j * SIZE_TILE,SIZE_TILE,SIZE_TILE };
-
-			switch (board[i][j].get_status())
-			{
-			case Tile::Status::Miss:
-				SDL_RenderCopy(renderer, tile_miss, nullptr, &rect);
-				break;
-			case Tile::Status::Hit:
-				SDL_RenderCopy(renderer, tile_hit, nullptr, &rect);
-				break;
-			case Tile::Status::SomeThing:
-				SDL_RenderCopy(renderer, tile_unknown, nullptr, &rect);
-				break;
-			default:
-				break;
-			}
-		}
-	}
-
-
-	if (find_target)
-
-	if (move_in_board)
-	{
-		SDL_Rect target_rect = { mouse_pos.x-15,mouse_pos.y-15,30,30 };
-
-	}
+    // 渲染所有格子状态
+    for (int y = 0; y < row; ++y) {
+        for (int x = 0; x < col; ++x) {
+            SDL_Rect rect = {
+                board_render_x + x * SIZE_TILE,
+                board_render_y + y * SIZE_TILE,
+                SIZE_TILE, SIZE_TILE
+            };
+            switch (board[y][x].get_status()) {
+            case Tile::Status::Miss:
+                SDL_RenderCopy(renderer, tile_miss, nullptr, &rect);
+                break;
+            case Tile::Status::Hit:
+                SDL_RenderCopy(renderer, tile_hit, nullptr, &rect);
+                break;
+            default:
+                break;
+            }
+        }
+    }
 
 }
 
-void Board::on_update(double delta)
+void Board::on_update(double /*delta*/)
 {
-	if (find_target)
-	{
-			find_target = false;
-
-			if (board[index_x][index_y].has_ship())
-			{
-				EffectManager::instance()->show_effect(EffectID::Explosion, rect_explosion_target, 0);
-			}
-			else
-			{
-				EffectManager::instance()->show_effect(EffectID::WaterSplash_single, rect_water_splash, 0);
-			}
-	}
+    if (find_target)
+    {
+        find_target = false;
+        if (board[index_y][index_x].has_ship())
+            EffectManager::instance()->show_effect(EffectID::Explosion, rect_explosion_target, 0);
+        else
+            EffectManager::instance()->show_effect(EffectID::WaterSplash_single, rect_water_splash, 0);
+    }
 }
 
 void Board::on_input(const SDL_Event& event)
 {
-	on_mouse_move(event);
+    on_mouse_move(event);
 
-	if (on_animation)
-		return;
-	on_mouse_click(event);
+    if (on_animation) 
+        return;   
+    on_mouse_click(event);
 }
 
-void Board::set_size(int row, int col)
+void Board::set_size(int r, int c)
 {
-	this->row = row;
-	this->col = col;
-	board.assign(row, std::vector<Tile>(col));
+    row = r; col = c;
+    board.assign(row, std::vector<Tile>(col));
 }
 
-void Board::set_board_pos(SDL_Point point)
+void Board::set_board_pos(SDL_Point pt)
 {
-	board_render_x = point.x;
-	board_render_y = point.y;
+    board_render_x = pt.x;
+    board_render_y = pt.y;
 }
 
 void Board::on_mouse_move(const SDL_Event& event)
 {
-	if (is_inside(event.motion.x, event.motion.y))
-	{
-		move_in_board = true;
-		mouse_pos.x = event.motion.x;
-		mouse_pos.y = event.motion.y;
-	}
-	else
-		move_in_board = false;
+    if (is_inside(event.motion.x, event.motion.y)) {
+        move_in_board = true;
+        mouse_pos.x = event.motion.x;
+        mouse_pos.y = event.motion.y;
+    }
+    else {
+        move_in_board = false;
+    }
 }
 
 void Board::on_mouse_click(const SDL_Event& event)
 {
-	if (is_inside(event.button.x, event.button.y))
-	{
-		click_in_board = true;
+    if (!is_inside(event.button.x, event.button.y) || on_animation)
+    {
+        click_in_board = false;
+        SDL_ShowCursor(SDL_ENABLE);
+        return;
+    }
 
-		if (event.type == SDL_MOUSEBUTTONUP)
-		{
+    click_in_board = true;
+    if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT)
+    {
+        int x = (event.button.x - board_render_x) / SIZE_TILE;
+        int y = (event.button.y - board_render_y) / SIZE_TILE;
 
-			mouse_click_pos.x = event.button.x;
-			mouse_click_pos.y = event.button.y;
+        if (x < 0 || x >= col || y < 0 || y >= row)
+            return;
 
-			if (event.button.button == SDL_BUTTON_LEFT)
-			{
-				index_x = (mouse_click_pos.x- board_render_x)/SIZE_TILE;
-				index_y = (mouse_click_pos.y- board_render_y)/SIZE_TILE;
+        index_x = x;
+        index_y = y;
+        mouse_click_tile_center =
+        {
+            board_render_x + x * SIZE_TILE + SIZE_TILE / 2,
+            board_render_y + y * SIZE_TILE + SIZE_TILE / 2
+        };
 
-				mouse_click_tile_center.x = board_render_x + index_x * SIZE_TILE + SIZE_TILE / 2;
-				mouse_click_tile_center.y = board_render_y + index_y * SIZE_TILE + SIZE_TILE / 2;
+        auto status = board[y][x].get_status();
 
-				if (board[index_x][index_y].get_status() == Tile::Status::Unknown ||
-					board[index_x][index_y].get_status() == Tile::Status::SomeThing)//确定棋盘格状态
-				{
-					rect_select_target = { board_render_x + index_x * SIZE_TILE - 20,board_render_y + index_y * SIZE_TILE - 20,SIZE_TILE + 40,SIZE_TILE + 40};//计算特效位置
-					rect_water_splash = { board_render_x + index_x * SIZE_TILE - 20,board_render_y + index_y * SIZE_TILE,SIZE_TILE + 40,SIZE_TILE };
+        if (status == Tile::Status::Unknown)
+        {
+            rect_select_target = {
+                board_render_x + x * SIZE_TILE - 20,
+                board_render_y + y * SIZE_TILE - 20,
+                SIZE_TILE + 40, SIZE_TILE + 40
+            };
+            rect_water_splash = {
+                board_render_x + x * SIZE_TILE - 20,
+                board_render_y + y * SIZE_TILE,
+                SIZE_TILE + 40, SIZE_TILE
+            };
+            rect_explosion_target = {
+                board_render_x + x * SIZE_TILE - 20,
+                board_render_y + y * SIZE_TILE - 40,
+                SIZE_TILE + 40, SIZE_TILE + 40
+            };
 
-					rect_explosion_target = { board_render_x + index_x * SIZE_TILE - 20,board_render_y + index_y * SIZE_TILE - 40 , SIZE_TILE + 40,SIZE_TILE + 40 };
-					EffectManager::instance()->show_effect(EffectID::SelectTarget, rect_select_target, 0);//向特效管理器提交选中特效
-
-					//on_animation = true;//进入播放动画
-				}
-			}
-		}
-	}
-	else
-	{
-		click_in_board = false;
-		SDL_ShowCursor(SDL_ENABLE);
-	}
+            EffectManager::instance()->show_effect(EffectID::SelectTarget, rect_select_target, 0);
+            on_animation = true;
+        }
+    }
 }
-
 
 bool Board::is_inside(int x, int y) const
 {
-	return x >= board_render_x
-		&& x < board_render_x + SIZE_TILE * col
-		&& y >= board_render_y
-		&& y < board_render_y + SIZE_TILE * row;
+    return x >= board_render_x
+        && x < board_render_x + col * SIZE_TILE
+        && y >= board_render_y
+        && y < board_render_y + row * SIZE_TILE;
 }
 
-void  Board::draw_board(SDL_Renderer* renderer)
+void Board::draw_board(SDL_Renderer* renderer)
 {
-	//深海蓝的棋盘背景矩形
-	SDL_Rect board_rect{ board_render_x, board_render_y, col * SIZE_TILE, row * SIZE_TILE };
-	SDL_SetRenderDrawColor(renderer, 30, 63, 102, 255);
-	SDL_RenderFillRect(renderer, &board_rect);
+    // 棋盘底色
+    SDL_Rect board_rect =
+    {
+        board_render_x, board_render_y,
+        col * SIZE_TILE, row * SIZE_TILE
+    };
+    SDL_SetRenderDrawColor(renderer, 30, 63, 102, 255);
+    SDL_RenderFillRect(renderer, &board_rect);
 
-	//半透明网格线
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, 10, 55, 50, 120);
-
-	// 竖线
-	for (int i = 0; i <= col; ++i) {
-		int x = board_render_x + i * SIZE_TILE;
-		SDL_RenderDrawLine(renderer, x, board_render_y, x, board_render_y + row * SIZE_TILE);
-	}
-
-	// 横线
-	for (int j = 0; j <= row; ++j) {
-		int y = board_render_y + j * SIZE_TILE;
-		SDL_RenderDrawLine(renderer, board_render_x, y, board_render_x + col * SIZE_TILE, y);
-	}
+    // 网格线
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 10, 55, 50, 120);
+    // 竖线
+    for (int i = 0; i <= col; ++i) 
+    {
+        int x = board_render_x + i * SIZE_TILE;
+        SDL_RenderDrawLine(
+            renderer, x, board_render_y, x,
+            board_render_y + row * SIZE_TILE
+        );
+    }
+    // 横线
+    for (int j = 0; j <= row; ++j) 
+    {
+        int y = board_render_y + j * SIZE_TILE;
+        SDL_RenderDrawLine(
+            renderer, board_render_x, y,
+            board_render_x + col * SIZE_TILE, y
+        );
+    }
 }
 
-bool Board::check_available(SDL_Point pos,int ship_size,bool is_horizontal)
+
+SDL_Point Board::place_ship(SDL_Point pos, int ship_size, bool is_horizontal)
 {
-	SDL_Point index;
-	index.x = (pos.x- board_render_x)/50;
-	index.y = (pos.y- board_render_y)/50;
+    int x = (pos.x - board_render_x) / SIZE_TILE;
+    int y = (pos.y - board_render_y) / SIZE_TILE;
 
-	if (!board[index.x][index.y].has_ship())
-	{
-		if (is_horizontal)
-		{
-			for (int i = 1; i < ship_size; i++)
-			{
-				if (index.x + i <= col)
-				{
-					if (board[index.x + i][index.y].has_ship())
-						return false;
-				}
-				else
-					return false;
-			}
-		}
-		else
-		{
-			for (int i = 1; i < ship_size; i++)
-			{
-				if (index.y + i <= row)
-				{
-					if (board[index.x][index.y+i].has_ship())
-						return false;
-				}
-				else
-					return false;
-			}
+    if (check_available(x,y, ship_size, is_horizontal))
+    {
+        if (is_horizontal)
+        {
+            for (int i = 0; i < ship_size; ++i)
+            {
+                board[y][x+i].place_ship();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ship_size; ++i)
+            {
+                board[y + i][x].place_ship();
+            }
+        }
+        show_board();
+        return { (x * SIZE_TILE) + board_render_x,(y * SIZE_TILE) + board_render_y };
+    }
+    return { -1,-1 };
+}
 
-		}
-		return true;
-	}
+void Board::move_ship(SDL_Point pos, int ship_size, bool is_horizontal)
+{
+    if (!is_inside(pos.x, pos.y))
+        return;
 
-	return false;
+    int x = (pos.x - board_render_x) / SIZE_TILE;
+    int y = (pos.y - board_render_y) / SIZE_TILE;
+    std::cout << "remove ship" << std::endl;////////////////////////////////
+
+        if (is_horizontal)
+        {
+            for (int i = 0; i < ship_size; ++i)
+            {
+                board[y][x + i].move_ship();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < ship_size; ++i)
+            {
+                board[y + i][x].move_ship();
+            }
+        }
+        show_board();
+}
+
+
+
+bool Board::check_available(int x,int y, int ship_size, bool is_horizontal)
+{
+
+
+    // 基本边界和已有船检测
+    if (x < 0 || x >= col || y < 0 || y >= row)
+        return false;
+
+    if (board[y][x].has_ship())
+        return false;
+
+    if (is_horizontal) {
+        if (x + ship_size > col)
+            return false;
+        for (int i = 1; i < ship_size; ++i)
+        {
+            if (board[y][x + i].has_ship())
+                return false;
+        }
+    }
+    else
+    {
+        if (y + ship_size > row)
+            return false;
+        for (int i = 1; i < ship_size; ++i)
+        {
+            if (board[y + i][x].has_ship())
+                return false;
+        }
+    }
+    return true;
+}
+
+
+
+void Board::show_board()
+{
+    for (int y = 0; y < row; ++y)
+    {
+        for (int x = 0; x < col; ++x)
+        {
+            if (board[y][x].has_ship())
+                std::cout << " 1";
+            else
+                std::cout << " 0";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }
