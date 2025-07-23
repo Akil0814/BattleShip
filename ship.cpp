@@ -45,7 +45,6 @@ void Ship::on_input(const SDL_Event& event)
 	if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_RIGHT)
 	{
 		ship_rotate = false;
-
 	}
 
 	if (ship_in_move && event.type == SDL_MOUSEMOTION)

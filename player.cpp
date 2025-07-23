@@ -2,8 +2,7 @@
 
 #include<iostream>//test
 /*
- 1.旋转可用性检测bug
- 2.在移动时对船只进行旋转的状态退回异常->限制一次输入中只能进行一种行为
+ 1.边界旋转有概率异常退回操作
 */
 
 Player::Player()
@@ -72,18 +71,26 @@ void Player::on_input(const SDL_Event& event)
 			if (p.x != -1)
 			{
 				current_ship->set_position(p);
-				std::cout << "put" << std::endl;
+				std::cout << "place_ship pass" << std::endl;
 			}
 			else
 			{
+				std::cout << "place_ship fall" << std::endl;
+				if (!current_ship->is_horizontal() == current_ship_last_hor_state)
+				{
+					current_ship->rotate_ship();
+					std::cout << "rotate in motion" << std::endl;
+
+				}
 				current_ship->set_position(current_ship_last_pos);
 				board.place_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
+				std::cout << "reverse" << std::endl;
 			}
 			current_ship = nullptr;
 			std::cout << "stop move" << std::endl;
 		}
-
 	}
+
 	else 
 	{
 		for (auto& ship : ship_list)
@@ -91,10 +98,11 @@ void Player::on_input(const SDL_Event& event)
 			ship->on_input(event);
 			if (ship->check_motion())
 			{
-				std::cout << "start move" << std::endl;
+				std::cout << "check_motion start" << std::endl;
 				have_ship_in_move = true;
 				current_ship = ship;
 				current_ship_last_pos = current_ship->get_position();
+				current_ship_last_hor_state = current_ship->is_horizontal();
 				board.move_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
 
 			}
@@ -102,22 +110,22 @@ void Player::on_input(const SDL_Event& event)
 			{
 				current_ship = ship;
 				current_ship_last_pos = current_ship->get_position();
+				current_ship_last_hor_state = current_ship->is_horizontal();
 				board.move_ship(current_ship_last_pos, current_ship->get_ship_size(), !current_ship->is_horizontal());
 
 				SDL_Point p = board.place_ship(current_ship->get_position(), current_ship->get_ship_size(), current_ship->is_horizontal());
 				if (p.x != -1)
 				{
 					current_ship->set_position(p);
-					std::cout << "R put" << std::endl;
+					std::cout << "check_rotate pass" << std::endl;
 				}
 				else
 				{
 					current_ship->rotate_ship();
 					current_ship->set_position(current_ship_last_pos);
 					board.place_ship(current_ship_last_pos, current_ship->get_ship_size(), current_ship->is_horizontal());
+					std::cout << "check_rotate fall" << std::endl;
 				}
-
-				std::cout << "rotated YYY" << std::endl;
 			}
 		}
 	}
