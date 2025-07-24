@@ -40,6 +40,8 @@ public:
 
 	void show_board();////////////////////////////////
 
+	void draw_cover(SDL_Renderer* renderer);
+
 private:
 
 	void draw_board(SDL_Renderer* renderer);

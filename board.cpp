@@ -318,3 +318,10 @@ void Board::reset_hit_time()
 {
     finish_hit = false;
 }
+
+void Board::draw_cover(SDL_Renderer* renderer)
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 54);
+    SDL_Rect rect = { board_render_x,board_render_y,SIZE_TILE * col ,SIZE_TILE * row };
+    SDL_RenderFillRect(renderer, &rect);
+}

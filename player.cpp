@@ -156,3 +156,8 @@ bool Player::finish_round()
 	return false;
 }
 
+void Player::draw_cover(SDL_Renderer* renderer)
+{
+	board.draw_cover(renderer);
+}
+

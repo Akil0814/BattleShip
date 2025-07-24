@@ -55,6 +55,8 @@ void SetupScene::on_render(SDL_Renderer* renderer)
 
 	current_player->on_render(renderer,true);
 
+	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+
 }
 void SetupScene::on_input(const SDL_Event& event)
 {
