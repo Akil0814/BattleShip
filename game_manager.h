@@ -61,7 +61,7 @@ private:
 
 private:
 
-	const int FPS = 60;
+	const int FPS = 30;//////////////////////////
 	bool is_quit = false;
 	bool is_PVE = false;
 

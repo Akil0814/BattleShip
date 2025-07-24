@@ -16,6 +16,7 @@ public:
 	void on_update(double delta);
 	void on_render(SDL_Renderer* renderer);
 	void on_input(const SDL_Event& event);
+	Player* get_other_player();
 
 private:
 	Player* p1 = nullptr;

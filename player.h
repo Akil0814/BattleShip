@@ -10,8 +10,18 @@ public:
 	~Player();
 
 	void on_render(SDL_Renderer* renderer);
+	void on_render(SDL_Renderer* renderer,bool set_up);
+
 	void on_update(double delta);
+	void on_update(double delta, bool setup);
+
+
 	virtual void on_input(const SDL_Event& event);
+	virtual void on_input(const SDL_Event& event, bool setup);
+	bool finish_round();
+
+
+	void set_board_pos(SDL_Point pos);
 
 private:
 

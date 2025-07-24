@@ -32,7 +32,10 @@ public:
 	bool init_all_effect();
 
 	void show_effect(EffectID effect_type,const SDL_Point& postion, double angle);
+	void show_effect(EffectID effect_type, const SDL_Point& postion, double angle, std::function<void()>);
 	void show_effect(EffectID effect_type,const SDL_Rect& rect, double angle);
+	void show_effect(EffectID effect_type, const SDL_Rect& rect, double angle,std::function<void()>);
+
 
 
 	void set_on_finished(EffectID effect_type,std::function<void()>);

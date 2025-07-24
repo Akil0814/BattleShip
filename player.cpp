@@ -36,30 +36,40 @@ Player::~Player()
 		delete ship;
 }
 					
-void Player::on_render(SDL_Renderer* renderer)	 
+void Player::on_render(SDL_Renderer* renderer)	//局内 
+{
+	board.on_render(renderer);
+}
+
+void Player::on_render(SDL_Renderer* renderer,bool setup)
 {
 	board.on_render(renderer);
 
 	for (auto& ship : ship_list)
 		ship->on_render(renderer);
-
-	EffectManager::instance()->on_render(renderer);//局内
 }
+
 
 void Player::on_update(double delta)
 {
 	board.on_update(delta);//局内
-
-	for (auto& ship : ship_list)
-		ship->on_update(delta);
-
-	EffectManager::instance()->on_update(delta);//局内
 }
 
-void Player::on_input(const SDL_Event& event) 
+void Player::on_update(double delta, bool setup)
+{
+	for (auto& ship : ship_list)
+		ship->on_update(delta);
+}
+
+
+void Player::on_input(const SDL_Event& event)
 {
 	board.on_input(event);
 
+}
+
+void Player::on_input(const SDL_Event& event,bool setup)
+{
 	if (have_ship_in_move == true)
 	{
 		current_ship->on_input(event);
@@ -130,3 +140,19 @@ void Player::on_input(const SDL_Event& event)
 		}
 	}
 }
+
+void Player::set_board_pos(SDL_Point pos)
+{
+	board.set_board_pos(pos);
+}
+
+bool Player::finish_round()
+{
+	if (board.finish_hit_time())
+	{
+		board.reset_hit_time();
+		return true;
+	}
+	return false;
+}
+

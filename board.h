@@ -32,6 +32,8 @@ public:
 
 	bool is_inside(int x, int y) const;
 	bool check_available(int x,int y, int ship_size, bool is_horizontal);
+	bool finish_hit_time()const;
+	void reset_hit_time();
 
 	static SDL_Texture* tile_hit;
 	static SDL_Texture* tile_miss;
@@ -51,6 +53,7 @@ private:
 	bool click_in_board = false;
 
 	bool find_target = false;
+	bool finish_hit = false;
 
 	int board_render_x = 0;
 	int board_render_y = 0;

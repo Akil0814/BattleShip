@@ -11,19 +11,6 @@ Board::Board()
 
     // 初始化棋盘数据
     board.assign(row, std::vector<Tile>(col));
-
-    // 特效回调
-    EffectManager::instance()->set_on_finished(EffectID::SelectTarget, [this]() {
-        find_target = true;
-        });
-    EffectManager::instance()->set_on_finished(EffectID::WaterSplash_single, [this]() {
-        on_animation = false;
-        board[index_y][index_x].change_status(Tile::Status::Miss);
-        });
-    EffectManager::instance()->set_on_finished(EffectID::Explosion, [this]() {
-        on_animation = false;
-        board[index_y][index_x].change_status(Tile::Status::Hit);
-        });
 }
 
 Board::~Board() = default;
@@ -31,6 +18,8 @@ Board::~Board() = default;
 void Board::on_render(SDL_Renderer* renderer)
 {
     draw_board(renderer);
+
+    EffectManager::instance()->on_render(renderer);
 
     // 渲染所有格子状态
     for (int y = 0; y < row; ++y) {
@@ -52,18 +41,32 @@ void Board::on_render(SDL_Renderer* renderer)
             }
         }
     }
-
 }
 
-void Board::on_update(double /*delta*/)
+void Board::on_update(double delta)
 {
+    std::cout << find_target;
+    EffectManager::instance()->on_update(delta);//局内
+
     if (find_target)
     {
+        std::cout << "board find target" << std::endl;
         find_target = false;
+
         if (board[index_y][index_x].has_ship())
-            EffectManager::instance()->show_effect(EffectID::Explosion, rect_explosion_target, 0);
+            EffectManager::instance()->show_effect(EffectID::Explosion, rect_explosion_target, 0, [this]()
+                {
+                    on_animation = false;
+                    board[index_y][index_x].change_status(Tile::Status::Hit);
+                    finish_hit = true;
+                });
         else
-            EffectManager::instance()->show_effect(EffectID::WaterSplash_single, rect_water_splash, 0);
+            EffectManager::instance()->show_effect(EffectID::WaterSplash_single, rect_water_splash, 0,[this]()
+                {
+                    on_animation = false;
+                    board[index_y][index_x].change_status(Tile::Status::Miss);
+                    finish_hit = true;
+                });
     }
 }
 
@@ -72,7 +75,8 @@ void Board::on_input(const SDL_Event& event)
     on_mouse_move(event);
 
     if (on_animation) 
-        return;   
+        return;
+
     on_mouse_click(event);
 }
 
@@ -95,17 +99,17 @@ void Board::on_mouse_move(const SDL_Event& event)
         mouse_pos.x = event.motion.x;
         mouse_pos.y = event.motion.y;
     }
-    else {
+    else
+    {
         move_in_board = false;
     }
 }
 
 void Board::on_mouse_click(const SDL_Event& event)
 {
-    if (!is_inside(event.button.x, event.button.y) || on_animation)
+    if (!is_inside(event.button.x, event.button.y))
     {
         click_in_board = false;
-        SDL_ShowCursor(SDL_ENABLE);
         return;
     }
 
@@ -146,7 +150,11 @@ void Board::on_mouse_click(const SDL_Event& event)
                 SIZE_TILE + 40, SIZE_TILE + 40
             };
 
-            EffectManager::instance()->show_effect(EffectID::SelectTarget, rect_select_target, 0);
+            EffectManager::instance()->show_effect(EffectID::SelectTarget, rect_select_target, 0, [this]()
+                {
+                    this->find_target = true;
+                });
+
             on_animation = true;
         }
     }
@@ -193,7 +201,6 @@ void Board::draw_board(SDL_Renderer* renderer)
         );
     }
 }
-
 
 SDL_Point Board::place_ship(SDL_Point pos, int ship_size, bool is_horizontal)
 {
@@ -301,4 +308,13 @@ void Board::show_board()
         std::cout << std::endl;
     }
     std::cout << std::endl;
+}
+
+bool Board::finish_hit_time()const
+{
+    return finish_hit;
+}
+void Board::reset_hit_time()
+{
+    finish_hit = false;
 }

@@ -42,7 +42,7 @@ void SetupScene::on_exit()
 
 void SetupScene::on_update(double delta)
 {
-	current_player->on_update(delta);
+	current_player->on_update(delta,true);
 }
 void SetupScene::on_render(SDL_Renderer* renderer)
 {
@@ -53,7 +53,7 @@ void SetupScene::on_render(SDL_Renderer* renderer)
 			next_button.on_render(renderer);
 	}
 
-	current_player->on_render(renderer);
+	current_player->on_render(renderer,true);
 
 }
 void SetupScene::on_input(const SDL_Event& event)
@@ -69,7 +69,7 @@ void SetupScene::on_input(const SDL_Event& event)
 	if (auto* pt = dynamic_cast<ComputerPlayer*>(p2))
 		start_button.on_input(event);
 
-	current_player->on_input(event);
+	current_player->on_input(event,true);
 }
 
 void SetupScene::next_player()

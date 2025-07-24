@@ -5,11 +5,13 @@ Effect::Effect()
 	this->is_loop = false;
 }
 
+//监测特效动画是否结束
 bool Effect::is_finished()
 {
 	return Animation::is_finished();
 }
 
+//更新特效动画
 void Effect::on_update(double delta)
 {
 	if(idx_frame==0 && have_sound)
@@ -18,6 +20,7 @@ void Effect::on_update(double delta)
 	Animation::on_update(delta);
 }
 
+//渲染特效动画
 void Effect::on_render(SDL_Renderer* renderer)
 {
 	if (have_rect)
@@ -26,6 +29,7 @@ void Effect::on_render(SDL_Renderer* renderer)
 		Animation::on_render(renderer,play_pos,angle);
 }
 
+//克隆接口
 std::unique_ptr<Effect> Effect::clone()const
 {
 	auto clone_effect = std::make_unique<Effect>();
@@ -41,6 +45,7 @@ std::unique_ptr<Effect> Effect::clone()const
 	return clone_effect;
 }
 
+//设置特效播放信息
 void Effect::set_play_data(SDL_Point pos,double angle)
 {
 	play_pos = pos;
@@ -51,6 +56,7 @@ void Effect::set_play_data(SDL_Point pos,double angle)
 	is_finish = false;
 }
 
+//设置特效播放信息
 void Effect::set_play_data(SDL_Rect rect, double angel)
 {
 	play_rect = rect;
@@ -61,6 +67,7 @@ void Effect::set_play_data(SDL_Rect rect, double angel)
 	is_finish = false;
 }
 
+//设置特效播放音效
 void  Effect::set_sound_effect(Mix_Chunk* sound)
 {
 	if (sound)
