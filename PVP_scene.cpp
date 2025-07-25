@@ -16,9 +16,9 @@ void PVPScene::on_enter()
 	SDL_SetWindowSize(GameManager::instance()->get_window(), WINDOW_WIDTH, WINDOW_HEIGHT);
 	p1 = GameManager::instance()->get_player1();
 	p2 = GameManager::instance()->get_player2();
-	current_player = p1;
-	current_player->set_board_pos({ 30,30 });
-	get_other_player()->set_board_pos({ 560,30 });
+	current_player = p2;
+	current_player->set_board_pos({ 560,30 });
+	get_other_player()->set_board_pos({ 30,30 });
 }
 void PVPScene::on_exit()
 {

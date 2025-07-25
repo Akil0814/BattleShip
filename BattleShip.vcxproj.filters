@@ -115,6 +115,9 @@
     <ClCompile Include="computer_player.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="settle_scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="manager.h">
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="computer_player.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="settle_scene..h">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
